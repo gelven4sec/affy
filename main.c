@@ -114,7 +114,7 @@ double* init_list_idf(char** list, int counter, int counter_genres, struct Movie
     return list_idf;
 }
 
-void init_vector(double* vector, struct Movie* movie, int counter, int counter_genres, char** list, double* list_idf){
+void init_vector(double* vector, struct Movie* movie, int counter, int counter_genres, char** list, const double* list_idf){
     for (int i = 0; i < counter; ++i) {
         char* str1 = list[i];
         if (i < counter_genres){
@@ -144,6 +144,38 @@ void init_vector(double* vector, struct Movie* movie, int counter, int counter_g
     }
 }
 
+// cos(x, y) = x * y / ( ||x|| * ||y|| )
+double cosine_similarity(const double* x, const double* y, int counter){
+    double result;
+    double x_y = 0;
+    double abs_x = 0;
+    double abs_y = 0;
+
+    for (int i = 0; i < counter; ++i) {
+        x_y = x_y + (x[i] * y[i]);
+    }
+
+    // if x*y = 0 then cosine is 90° anyway
+    if (x_y == 0.0){
+        printf("\nx_y was null");
+        return 0.0;
+    }
+
+    for (int i = 0; i < counter; ++i) {
+        abs_x = abs_x + ( x[i] * x[i] );
+    }
+    abs_x = sqrt(abs_x);
+
+    for (int i = 0; i < counter; ++i) {
+        abs_y = abs_y + ( y[i] * y[i] );
+    }
+    abs_y = sqrt(abs_y);
+
+    result = x_y / (abs_x * abs_y);
+
+    return result;
+}
+
 
 double get_cosine_similarity(struct Movie* movie1, struct Movie* movie2, struct Movie* dataset){
     int counter = 0;
@@ -152,19 +184,20 @@ double get_cosine_similarity(struct Movie* movie1, struct Movie* movie2, struct 
     double* list_idf = init_list_idf(list, counter, counter_genres, dataset);
     double* vector1 = malloc(sizeof(double) * counter);
     double* vector2 = malloc(sizeof(double) * counter);
+    double result;
 
     init_vector(vector1, movie1, counter, counter_genres, list, list_idf);
     init_vector(vector2, movie2, counter, counter_genres, list, list_idf);
 
 
-    //todo: cosine similarity
+    result = cosine_similarity(vector1, vector2, counter);
 
 
     free(vector1);
     free(vector2);
     free(list);
     free(list_idf);
-    return 0.0;
+    return result;
 }
 
 
@@ -172,6 +205,7 @@ double get_cosine_similarity(struct Movie* movie1, struct Movie* movie2, struct 
 int main() {
     struct Movie *dataset; // the list of movies and their details
     double cosine;
+    double cosine2;
 
 
     // get the dataset from local file into a list of Movies (made be commit suicide)
@@ -183,15 +217,13 @@ int main() {
     dataset = init_dataset(dataset_file);
     fclose(dataset_file);
 
-    /*for (int i = 0; i < 10; ++i) {
-        printf("\n%d", dataset[i].nb_genres);
-    }*/
 
-
-    cosine = get_cosine_similarity(&dataset[0], &dataset[1], dataset);
+    cosine = get_cosine_similarity(&dataset[96060], &dataset[113951], dataset); // test Kill Bill : 0.765743
+    cosine2 = get_cosine_similarity(&dataset[96064], &dataset[113901], dataset);
+    printf("\nCosine similarity : %lf", cosine);
 
 
     free_dataset(dataset);
-    //free(dataset); //cannot free because heap corruption (wtf) (maybe I forgot to free something inside idk)
+    //free(dataset); //cannot free because heap corruption (wtf) (maybe I forgot to free something inside idk or double free)
     return 0;
 }
