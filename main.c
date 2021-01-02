@@ -157,7 +157,7 @@ double cosine_similarity(const double* x, const double* y, int counter){
 
     // if x*y = 0 then cosine is 90° anyway
     if (x_y == 0.0){
-        printf("\nx_y was null");
+        //printf("\nx_y was null");
         return 0.0;
     }
 
@@ -204,7 +204,7 @@ double get_cosine_similarity(struct Movie* movie1, struct Movie* movie2, struct 
 // main
 int main() {
     struct Movie *dataset; // the list of movies and their details
-    double cosine;
+    double cosine = 1.0;
     double cosine2;
 
 
@@ -217,13 +217,13 @@ int main() {
     dataset = init_dataset(dataset_file);
     fclose(dataset_file);
 
-
-    cosine = get_cosine_similarity(&dataset[96060], &dataset[113951], dataset); // test Kill Bill : 0.765743
-    cosine2 = get_cosine_similarity(&dataset[96064], &dataset[113901], dataset);
-    printf("\nCosine similarity : %lf", cosine);
+    /*for (int i = 0; i < 10; ++i) {
+        cosine = get_cosine_similarity(&dataset[96061+i], &dataset[113952+i], dataset); // test Kill Bill : 0.765743
+        printf("\nCosine similarity : %lf", cosine);
+    }*/
 
 
     free_dataset(dataset);
-    //free(dataset); //cannot free because heap corruption (wtf) (maybe I forgot to free something inside idk or double free)
+    free(dataset); //cannot free because heap corruption (wtf) (maybe I forgot to free something inside idk or double free)
     return 0;
 }
