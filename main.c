@@ -4,71 +4,52 @@
 #include <math.h>
 #include "dataset.h"
 
-
-// clean this mess
-char** init_bag_of_word(struct Movie* movie1, struct Movie* movie2, int* counter, int* counter_genres){
-    *counter = movie1->nb_genres;
-    int counter_nconsts = movie1->nb_nconst;
-    char** list = malloc(sizeof(char *) * (*counter));
-
-    for (int i = 0; i < *counter; i++) {
-        (*counter_genres)++;
-        list[i] = movie1->genres[i];
+int check_duplicate(char** list, int nb, char* str){
+    for (int i = 0; i < nb; ++i) {
+        if (strcmp(list[i], str) == 0) return 0;
     }
-
-    for (int i = 0; i < movie2->nb_genres; ++i){
-        int counter2 = 0;
-        char* str1 = movie2->genres[i];
-        for (int j = 0; j < *counter; ++j) {
-            char* str2 = movie1->genres[j];
-            if (strcmp(str1, str2) == 0){
-                counter2++;
-                break;
-            }
-        }
-
-        if (counter2 == 0){
-            (*counter)++;
-            (*counter_genres)++;
-            list = realloc(list, sizeof(char *) * *counter);
-            list[(*counter)-1] = movie2->genres[i];
-        }
-    }
-
-    for (int i = 0; i < counter_nconsts; ++i) {
-        (*counter)++;
-        list = realloc(list, sizeof(char *) * (*counter));
-        list[(*counter)-1] = movie1->nconsts[i];
-    }
-
-
-    for (int i = 0; i < movie2->nb_nconst; ++i){
-        int counter2 = 0;
-        char* str1 = movie2->nconsts[i];
-        for (int j = 0; j < counter_nconsts; ++j) {
-            char* str2 = movie1->nconsts[j];
-            if (strcmp(str1, str2) == 0){
-                counter2++;
-                break;
-            }
-        }
-
-        if (counter2 == 0){
-            (*counter)++;
-            list = realloc(list, sizeof(char *) * (*counter));
-            list[(*counter)-1] = movie2->nconsts[i];
-        }
-    }
-    return list;
+    return 1;
 }
 
+char** init_bag_words(struct Movie movie1, struct Movie movie2, int* counter, int* counter_genres){
+    int size = movie1.nb_genres + movie1.nb_nconst + movie2.nb_genres + movie2.nb_nconst;
+    char** list = malloc(sizeof(char *) * size);
+
+    for (int i = 0; i < movie1.nb_genres; ++i) {
+        list[i] = movie1.genres[i];
+        (*counter)++;
+        (*counter_genres)++;
+    }
+
+    for (int i = 0; i < movie2.nb_genres; ++i) {
+        if (check_duplicate(movie1.genres, movie1.nb_genres, movie2.genres[i]) == 1){
+            list[(*counter)] = movie2.genres[i];
+            (*counter)++;
+            (*counter_genres)++;
+        }
+    }
+
+    for (int i = 0; i < movie1.nb_nconst; ++i) {
+        list[(*counter)] = movie1.nconsts[i];
+        (*counter)++;
+    }
+
+    for (int i = 0; i < movie2.nb_nconst; ++i) {
+        if (check_duplicate(movie1.nconsts, movie1.nb_nconst, movie2.nconsts[i]) == 1){
+            list[(*counter)] = movie2.nconsts[i];
+            (*counter)++;
+        }
+    }
+
+    return list;
+}
 
 // inverse document frequency
 double idf_nconsts(char* word, struct Movie* dataset){
     int counter = 0;
     double result;
 
-    for (int i = 0; i < 246710; ++i) {
+    for (int i = 0; i < 246711; ++i) {
         struct Movie movie = dataset[i];
         for (int j = 0; j < movie.nb_nconst; ++j) {
             if (strcmp(word, movie.nconsts[j]) == 0){
@@ -77,7 +58,7 @@ double idf_nconsts(char* word, struct Movie* dataset){
         }
     }
 
-    result = log10(246710.0/counter);
+    result = log10(246711.0/counter);
 
     return result;
 }
@@ -86,7 +67,7 @@ double idf_genres(char* word, struct Movie* dataset){
     int counter = 0;
     double result;
 
-    for (int i = 0; i < 246710; ++i) {
+    for (int i = 0; i < 246711; ++i) {
         struct Movie movie = dataset[i];
         for (int j = 0; j < movie.nb_genres; ++j) {
             if (strcmp(word, movie.genres[j]) == 0){
@@ -95,7 +76,7 @@ double idf_genres(char* word, struct Movie* dataset){
         }
     }
 
-    result = log10(246710.0/counter);
+    result = log10(246711.0/counter);
 
     return result;
 }
@@ -114,12 +95,12 @@ double* init_list_idf(char** list, int counter, int counter_genres, struct Movie
     return list_idf;
 }
 
-void init_vector(double* vector, struct Movie* movie, int counter, int counter_genres, char** list, const double* list_idf){
+void init_vector(double* vector, struct Movie movie, int counter, int counter_genres, char** list, const double* list_idf){
     for (int i = 0; i < counter; ++i) {
         char* str1 = list[i];
         if (i < counter_genres){
-            for (int j = 0; j < movie->nb_genres; j++){
-                char* str2 = movie->genres[j];
+            for (int j = 0; j < movie.nb_genres; j++){
+                char* str2 = movie.genres[j];
                 if (strcmp(str1, str2) == 0){
                     vector[i] = list_idf[i];
                     break;
@@ -129,8 +110,8 @@ void init_vector(double* vector, struct Movie* movie, int counter, int counter_g
 
             }
         } else {
-            for (int j = 0; j < movie->nb_nconst; j++){
-                char* str2 = movie->nconsts[j];
+            for (int j = 0; j < movie.nb_nconst; j++){
+                char* str2 = movie.nconsts[j];
                 if (strcmp(str1, str2) == 0){
                     vector[i] = list_idf[i];
                     break;
@@ -157,7 +138,6 @@ double cosine_similarity(const double* x, const double* y, int counter){
 
     // if x*y = 0 then cosine is 90° anyway
     if (x_y == 0.0){
-        //printf("\nx_y was null");
         return 0.0;
     }
 
@@ -177,10 +157,10 @@ double cosine_similarity(const double* x, const double* y, int counter){
 }
 
 
-double get_cosine_similarity(struct Movie* movie1, struct Movie* movie2, struct Movie* dataset){
+double get_cosine_similarity(struct Movie movie1, struct Movie movie2, struct Movie* dataset){
     int counter = 0;
     int counter_genres = 0;
-    char** list = init_bag_of_word(movie1, movie2, &counter, &counter_genres);
+    char** list = init_bag_words(movie1, movie2, &counter, &counter_genres);
     double* list_idf = init_list_idf(list, counter, counter_genres, dataset);
     double* vector1 = malloc(sizeof(double) * counter);
     double* vector2 = malloc(sizeof(double) * counter);
@@ -189,9 +169,7 @@ double get_cosine_similarity(struct Movie* movie1, struct Movie* movie2, struct 
     init_vector(vector1, movie1, counter, counter_genres, list, list_idf);
     init_vector(vector2, movie2, counter, counter_genres, list, list_idf);
 
-
     result = cosine_similarity(vector1, vector2, counter);
-
 
     free(vector1);
     free(vector2);
@@ -204,8 +182,8 @@ double get_cosine_similarity(struct Movie* movie1, struct Movie* movie2, struct 
 // main
 int main() {
     struct Movie *dataset; // the list of movies and their details
-    double cosine = 1.0;
-    double cosine2;
+    double* cosine = malloc(sizeof(double)*1000);
+
 
 
     // get the dataset from local file into a list of Movies (made be commit suicide)
@@ -217,12 +195,14 @@ int main() {
     dataset = init_dataset(dataset_file);
     fclose(dataset_file);
 
-    /*for (int i = 0; i < 10; ++i) {
-        cosine = get_cosine_similarity(&dataset[96061+i], &dataset[113952+i], dataset); // test Kill Bill : 0.765743
-        printf("\nCosine similarity : %lf", cosine);
-    }*/
+    printf("Begin !");
+    for (int i = 0; i < 1000; ++i) {
+        cosine[i] = get_cosine_similarity(dataset[1], dataset[i], dataset);
+    }
+    printf("\nFinished !");
 
 
+    free(cosine);
     free_dataset(dataset);
     free(dataset); //cannot free because heap corruption (wtf) (maybe I forgot to free something inside idk or double free)
     return 0;
