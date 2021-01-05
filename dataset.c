@@ -92,7 +92,7 @@ struct Movie * init_dataset(FILE* stream){
     char line[1024];
     int counter = 0;
 
-    dataset = malloc(sizeof(struct Movie)*246710);
+    dataset = malloc(sizeof(struct Movie)*246711);
     if (dataset == NULL) {
         printf("Failed to allocate memory to dataset.");
         exit(EXIT_FAILURE);
@@ -101,7 +101,7 @@ struct Movie * init_dataset(FILE* stream){
     while (fgets(line, 1024, stream)){
         char* tmp = strdup(line);
 
-        dataset[counter-1] = get_movie(tmp);
+        dataset[counter] = get_movie(tmp);
         counter++;
 
         free(tmp);
@@ -123,11 +123,13 @@ void free_genres(struct Movie* movie){
 
 // free dataset
 void free_dataset(struct Movie* dataset){
-    for (int i = 0; i < 246710; i++){
+    for (int i = 0; i < 246711; i++){
         free(dataset[i].tconst);
         free(dataset[i].primaryTile);
         free_genres(&dataset[i]);
         free_nconsts(&dataset[i]);
+        free(dataset[i].genres);
+        free(dataset[i].nconsts);
     }
 }
 
