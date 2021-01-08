@@ -1,7 +1,10 @@
 //
-// Created by user0 on 1/1/2021.
+// Created by sven-eliasen on 1/1/2021.
 //
-
+// This function is about returning a list of
+// struct Movie to store the data from the dataset
+// file in argument.
+//
 #include "dataset.h"
 #include <stdio.h>
 #include <stdlib.h>

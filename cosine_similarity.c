@@ -1,12 +1,17 @@
 //
-// Created by user0 on 1/5/2021.
+// Created by sven-eliasen on 1/5/2021.
 //
-#include <stdio.h>
+// This function process the calculation of the
+// cosine similarity of two films as arguments.
+//
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include "dataset.h"
 #include "cosine_similarity.h"
+
+#define GENRE_WEIGHT 1
+#define NCONST_WEIGHT 5
 
 int check_duplicate(char** list, int nb, char* str){
     for (int i = 0; i < nb; ++i) {
@@ -90,9 +95,9 @@ double* init_list_idf(char** list, int counter, int counter_genres){
     double* list_idf = malloc(sizeof(double) * (counter));
     for (int i = 0; i < counter; ++i) {
         if (i < counter_genres){
-            list_idf[i] = 1; // genres weight = 1
+            list_idf[i] = GENRE_WEIGHT; // genres weight = 1
         } else {
-            list_idf[i] = 5; // nconsts weight = 5
+            list_idf[i] = NCONST_WEIGHT; // nconsts weight = 5
         }
     }
 
