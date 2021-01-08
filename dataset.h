@@ -8,6 +8,9 @@
 
 #include <stdio.h>
 
+#define SIZE 246710
+
+
 // movie dataframe
 struct Movie{
     char* tconst;
