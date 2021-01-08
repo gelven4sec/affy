@@ -135,14 +135,3 @@ void free_dataset(struct Movie* dataset){
         free(dataset[i].nconsts);
     }
 }
-
-void print_dataset_10(struct Movie* dataset){
-    for (int i = 0; i < 10; i++){
-        printf("\n%s\t%d", dataset[i].tconst, dataset[i].nb_genres);
-    }
-}
-
-// getter
-struct Movie getter_movie(struct Movie* dataset, int row){
-    return dataset[row];
-}
