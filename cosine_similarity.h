@@ -1,5 +1,5 @@
 //
-// Created by user0 on 1/5/2021.
+// Created by sven-eliasen on 1/5/2021.
 //
 
 #ifndef AFFY_COSINE_SIMILARITY_H
