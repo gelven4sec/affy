@@ -129,12 +129,22 @@ void init_vector(double* vector, struct Movie movie, int counter, int counter_ge
     }
 }
 
+int check_identical(const double* x, const double* y, int counter){
+    int count = 0;
+    for (int i = 0; i < counter; ++i) {
+        if (x[i] == y[i]) count++;
+    }
+    return count;
+}
+
 // cos(x, y) = x * y / ( ||x|| * ||y|| )
 double cosine_similarity(const double* x, const double* y, int counter){
     double result;
     double x_y = 0;
     double abs_x = 0;
     double abs_y = 0;
+
+    if (check_identical(x, y, counter) == counter) return 0.0;
 
     for (int i = 0; i < counter; ++i) {
         x_y = x_y + (x[i] * y[i]);
