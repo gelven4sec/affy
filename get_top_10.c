@@ -42,7 +42,7 @@ int* bubble_sort(double* list_cosine){
     int* list = malloc(sizeof(int) * 10);
     int* list_index = array_index();
 
-    for(outer=0;outer<SIZE-1;outer++){
+    for(outer = 0; outer < 10; outer++){
         for(inner=outer+1;inner<SIZE;inner++){
             if(list_cosine[outer] < list_cosine[inner]){
 
@@ -56,7 +56,6 @@ int* bubble_sort(double* list_cosine){
 
             }
         }
-        if ((outer % 10000) == 0) printf("\n%d/246710", outer);
     }
 
     for (int i = 0; i < 10; ++i) {
