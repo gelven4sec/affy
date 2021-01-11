@@ -77,7 +77,7 @@ int* get_top_10(char* tconst, struct Movie* dataset){
     }
 
     for (int i = 0; i < SIZE; ++i) {
-        list[i] = get_cosine_similarity(dataset[index], dataset[i]);// this list contain a lot of 0, maybe optimize this
+        list[i] = get_cosine_similarity(dataset[index], dataset[i]);
     }
 
     result_list = bubble_sort(list);

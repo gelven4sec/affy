@@ -24,7 +24,7 @@ int main() {
     dataset = init_dataset(dataset_file);
     fclose(dataset_file);
 
-    result_list = get_top_10("tt0120915", dataset); // slow as fuck
+    result_list = get_top_10("tt0120915", dataset);
 
     // DEBUG
     for (int i = 0; i < 10; ++i) {
