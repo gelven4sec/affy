@@ -14,8 +14,11 @@
 #define NCONST_WEIGHT 5
 
 int check_duplicate(char** list, int nb, char* str){
+
     for (int i = 0; i < nb; ++i) {
+
         if (strcmp(list[i], str) == 0) return 0;
+        //printf("\nS1: %s\tS2: %s",str, list[i]);
     }
     return 1;
 }
