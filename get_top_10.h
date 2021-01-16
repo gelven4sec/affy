@@ -9,4 +9,6 @@
 
 int* get_top_10(char* tconst, struct Movie* dataset);
 
+int get_index(char* tconst, struct Movie* dataset);
+
 #endif //AFFY_GET_TOP_10_H

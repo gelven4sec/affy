@@ -9,4 +9,6 @@
 
 double get_cosine_similarity(struct Movie movie1, struct Movie movie2);
 
+int check_duplicate(char** list, int nb, char* str);
+
 #endif //AFFY_COSINE_SIMILARITY_H
