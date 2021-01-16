@@ -85,3 +85,27 @@ int* get_top_10(char* tconst, struct Movie* dataset){
     free(list);
     return result_list;
 }
+
+int* get_top_10_user(struct Movie user_profile, struct Movie* dataset, char** liked_list, int nb){
+    double* list = malloc(sizeof(double) * SIZE);
+    int* result_list;
+    int list_index[nb];
+
+    for (int i = 0; i < nb; ++i) {
+        list_index[i] = get_index(liked_list[i], dataset);
+    }
+    free(liked_list);
+
+    for (int i = 0; i < SIZE; ++i) {
+        list[i] = get_cosine_similarity(user_profile, dataset[i]);
+    }
+
+    for (int i = 0; i < nb; ++i) {
+        list[list_index[i]] = 0.0;
+    }
+
+    result_list = bubble_sort(list);
+
+    free(list);
+    return result_list;
+}
