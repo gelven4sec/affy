@@ -26,4 +26,6 @@ struct Movie * init_dataset(FILE* stream);
 
 void free_dataset(struct Movie* dataset);
 
+struct Movie* get_dataset();
+
 #endif //AFFY_DATASET_H

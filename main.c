@@ -27,13 +27,7 @@ int main() {
     int* result_list;
 
     // get the dataset from local file into a list of Movies (made be commit suicide)
-    FILE* dataset_file = fopen("../dataset/data.tsv", "r"); // dataset local .tsv file
-    if (dataset_file == NULL){
-        printf("\nCould not read dataset file.\nExit...");
-        exit(EXIT_FAILURE);
-    }
-    dataset = init_dataset(dataset_file);
-    fclose(dataset_file);
+    dataset = get_dataset();
 
     user_profile = create_user_profile(liked, 3, dataset);
 
