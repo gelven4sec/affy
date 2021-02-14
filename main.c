@@ -6,9 +6,10 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
-#include "dataset.h"
-#include "get_top_10.h"
-#include "create_profile.h"
+#include "libaffy/dataset.h"
+#include "libaffy/get_top_10.h"
+#include "libaffy/create_profile.h"
+#include "libaffy/request.h"
 
 char** create_liked(){
     char** list = malloc(sizeof(char*) * 3);
@@ -21,7 +22,7 @@ char** create_liked(){
 
 // main
 int main() {
-    struct Movie *dataset; // the list of movies and their details
+    /*struct Movie *dataset; // the list of movies and their details
     char** liked = create_liked();
     struct Movie user_profile;
     int* result_list;
@@ -42,6 +43,9 @@ int main() {
     free(user_profile.nconsts);
     free(result_list);
     free_dataset(dataset);
-    free(dataset);
+    free(dataset);*/
+
+    search();
+
     return 0;
 }
