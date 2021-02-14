@@ -9,7 +9,7 @@
 #include "libaffy/dataset.h"
 #include "libaffy/get_top_10.h"
 #include "libaffy/create_profile.h"
-#include "libaffy/search.h"
+#include "libaffy/request.h"
 
 char** create_liked(){
     char** list = malloc(sizeof(char*) * 3);
