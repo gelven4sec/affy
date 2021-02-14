@@ -21,11 +21,12 @@ struct Movie{
     int nb_nconst;
     int nb_genres;
 };
+typedef struct Movie MOVIE;
 
-struct Movie * init_dataset(FILE* stream);
+MOVIE* init_dataset(FILE* stream);
 
-void free_dataset(struct Movie* dataset);
+void free_dataset(MOVIE* dataset);
 
-struct Movie* get_dataset();
+MOVIE* get_dataset();
 
 #endif //AFFY_DATASET_H

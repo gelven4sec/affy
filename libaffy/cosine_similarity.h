@@ -7,7 +7,7 @@
 
 #include "dataset.h"
 
-double get_cosine_similarity(struct Movie movie1, struct Movie movie2);
+double get_cosine_similarity(MOVIE movie1, MOVIE movie2);
 
 int check_duplicate(char** list, int nb, char* str);
 
