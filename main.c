@@ -34,7 +34,7 @@ int main() {
 
     user_profile = create_user_profile(liked, 3, dataset);
 
-    result_list = get_top_10_user(user_profile, dataset, liked, 3); // liked is freed here for now
+    result_list = get_top_10_user(&user_profile, dataset, liked, 3); // liked is freed here for now
 
     // DEBUG
     for (int i = 0; i < 10; ++i) {

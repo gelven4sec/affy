@@ -25,7 +25,7 @@ typedef struct Movie MOVIE;
 
 MOVIE* init_dataset(FILE* stream);
 
-void free_dataset(MOVIE* dataset);
+void free_dataset(const MOVIE* dataset);
 
 MOVIE* get_dataset();
 

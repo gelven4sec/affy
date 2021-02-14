@@ -12,7 +12,7 @@
 #include "cosine_similarity.h"
 #include "get_top_10.h"
 
-int get_index(char* tconst, struct Movie* dataset){
+int get_index(char* tconst, const MOVIE* dataset){
     for (int i = 1; i < SIZE; ++i) {
         if (strcmp(tconst, dataset[i].tconst) == 0) return i;
     }
@@ -66,7 +66,7 @@ int* bubble_sort(double* list_cosine){
     return list;
 }
 
-int* get_top_10(char* tconst, struct Movie* dataset){
+int* get_top_10(char* tconst, MOVIE* dataset){
     int index = get_index(tconst, dataset);
     double* list = malloc(sizeof(double) * SIZE);
     int* result_list;
@@ -77,7 +77,7 @@ int* get_top_10(char* tconst, struct Movie* dataset){
     }
 
     for (int i = 0; i < SIZE; ++i) {
-        list[i] = get_cosine_similarity(dataset[index], dataset[i]);
+        list[i] = get_cosine_similarity(&dataset[index], &dataset[i]);
     }
 
     result_list = bubble_sort(list);
@@ -86,7 +86,7 @@ int* get_top_10(char* tconst, struct Movie* dataset){
     return result_list;
 }
 
-int* get_top_10_user(struct Movie user_profile, struct Movie* dataset, char** liked_list, int nb){
+int* get_top_10_user(const MOVIE* user_profile, const MOVIE* dataset, char** liked_list, int nb){
     double* list = malloc(sizeof(double) * SIZE);
     int* result_list;
     int list_index[nb];
@@ -97,7 +97,7 @@ int* get_top_10_user(struct Movie user_profile, struct Movie* dataset, char** li
     free(liked_list);
 
     for (int i = 0; i < SIZE; ++i) {
-        list[i] = get_cosine_similarity(user_profile, dataset[i]);
+        list[i] = get_cosine_similarity(user_profile, &dataset[i]);
     }
 
     for (int i = 0; i < nb; ++i) {

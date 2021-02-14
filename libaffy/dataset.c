@@ -137,7 +137,7 @@ void free_genres(const MOVIE* movie){
 }
 
 // free dataset
-void free_dataset(MOVIE* dataset){
+void free_dataset(const MOVIE* dataset){
     for (int i = 0; i < SIZE; i++){
         free(dataset[i].tconst);
         free(dataset[i].primaryTile);
