@@ -57,7 +57,7 @@ static size_t write_result(void *ptr, size_t size, size_t nmemb, void *stream){
 
 
 
-int search() {
+RESULT_SEARCH search() {
     char* url;
     char* title;
     char* temp;
@@ -99,10 +99,5 @@ int search() {
     //printf("\n%s", result);
     RESULT_SEARCH output = get_title_list(result);
 
-    for (int i = 0; i < output.nb; ++i) {
-        printf("\n%d\t%s\t%s\t%s", i, output.titles[i], output.years[i], output.ids[i]);
-    }
-
-    return 0;
-
+    return output;
 }

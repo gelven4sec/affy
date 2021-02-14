@@ -9,6 +9,7 @@
 #include "libaffy/dataset.h"
 #include "libaffy/get_top_10.h"
 #include "libaffy/create_profile.h"
+#include "libaffy/parse_json.h"
 #include "libaffy/request.h"
 
 char** create_liked(){
@@ -26,6 +27,7 @@ int main() {
     char** liked = create_liked();
     struct Movie user_profile;
     int* result_list;
+
 
     // get the dataset from local file into a list of Movies (made be commit suicide)
     dataset = get_dataset();
@@ -45,7 +47,12 @@ int main() {
     free_dataset(dataset);
     free(dataset);*/
 
-    search();
+    RESULT_SEARCH output;
+    output = search();
+
+    for (int i = 0; i < output.nb; ++i) {
+        printf("\n%d\t%s\t%s\t%s", i, output.titles[i], output.years[i], output.ids[i]);
+    }
 
     return 0;
 }
