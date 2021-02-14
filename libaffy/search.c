@@ -1,65 +1,63 @@
 #include <stdio.h>
 #include <string.h>
 #include <curl/curl.h>
+#include <json-c/json.h>
 
-//Function replace movie by title
+char result[1024];
 
-void string_replace(char* source, char* substring, char* with){
-    char* substring_source = strstr(source, substring);
-    if (substring_source == NULL){
-        return;
+// return user input title, only for cli version
+char* read_input(){
+    int counter = 0;
+    char *input = malloc(sizeof(char) * 1024);
+    int c;
+
+    if (!input) {
+        fprintf(stderr, "\nCould not allocate more memory");
+        exit(EXIT_FAILURE);
     }
 
-    memmove(
-            substring_source + strlen(with),
-            substring_source + strlen(substring),
-            strlen(substring_source)- strlen(substring)+1
-            );
+    // loop until user input enter
+    while (1) {
+        c = getchar();
 
-    memcpy(substring_source,with, strlen(with));
+        if (c == '\n') {
+            input[counter] = '\0';
+            return input;
+        } else {
+            input[counter] = c;
+        }
+        counter++;
+
+        // if input is larger than 1024 bytes than stop and return nothing
+        if (counter >= 1024) {
+            fprintf(stderr, "\nExceed maximum input capacity");
+            return "";
+        }
+    }
 }
 
+// takes request's argument to return usable url
+char* get_url(char* apikey, char* title, unsigned int page){
+    char* url = malloc(sizeof(char) * 1024);
 
-//Function replace numb by the number
+    sprintf(url, "http://www.omdbapi.com/?s=%s&apikey=%s&page=%u", title, apikey, page);
+    free(title);
 
-void page_numb(char* source, char* substring, char* with){
-
-    char string[225];
-    int value = 1;
-    sprintf(string, "%d", value);
-
-    char* substring_source = strstr(source, substring);
-    if (substring_source == NULL){
-        return;
-    }
-
-    memmove(
-            substring_source + strlen(with),
-            substring_source + strlen(substring),
-            strlen(substring_source)- strlen(substring)+1
-    );
-
-    memcpy(substring_source,with, strlen(with));
+    return url;
 }
 
 int search() {
-
-    char url[255]= "http://www.omdbapi.com/?s=movie&apikey=cab5fef3&page=numb";
-    char title[20] = {0};
-    char numb[20]={0};
+    char* url;
+    char* title;
+    char* temp;
 
     //Replace movie
-    printf("Please, enter the title of the movie :" );
-    scanf("%s",title);
+    printf("\nPlease, enter the title of the movie :" );
+    title = read_input();
+    temp = strchr(title, ' ');
+    if (temp != NULL) {*temp = '+';} // cant let a space in http request
 
-    //Replace page number
-    printf("Please, enter the page number :" );
-    scanf("%s",numb);
-
-    //printf("%s\n",url); for testing
-    string_replace(url,"movie",title);
-    page_numb(url,"numb",numb);
-    //printf("%s\n",url); for testing
+    url = get_url("cab5fef3", title, 1); // free title here
 
     CURL *curl;
     char result;
@@ -77,14 +75,11 @@ int search() {
 
 
         if (result != CURLE_OK)
-            fprintf(stderr, "curl_easy_perform() failed: %s\n",
-                    curl_easy_strerror(result));
-
-        /* always cleanup */
+            fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(result));
 
         curl_easy_cleanup(curl);
     }
-
+    free(url);
 
 
     return 0;

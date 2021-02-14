@@ -5,4 +5,6 @@
 #ifndef TESTING_SEARCH_H
 #define TESTING_SEARCH_H
 
+int search();
+
 #endif //TESTING_SEARCH_H
