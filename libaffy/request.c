@@ -97,7 +97,7 @@ int search() {
     free(url);
 
     //printf("\n%s", result);
-    RESULT output = get_title_list(result);
+    RESULT_SEARCH output = get_title_list(result);
 
     for (int i = 0; i < output.nb; ++i) {
         printf("\n%d\t%s\t%s\t%s", i, output.titles[i], output.years[i], output.ids[i]);

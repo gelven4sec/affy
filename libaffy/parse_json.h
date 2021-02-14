@@ -11,8 +11,12 @@ struct Result{
     char** ids;
     size_t nb;
 };
-typedef struct Result RESULT;
+typedef struct Result RESULT_SEARCH;
 
-RESULT get_title_list(char* result);
+struct ResultTitle{
+    char* test; //todo: determine what information to take
+};
+
+RESULT_SEARCH get_title_list(char* result);
 
 #endif //AFFY_PARSE_JSON_H

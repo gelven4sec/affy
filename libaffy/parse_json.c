@@ -21,7 +21,7 @@ int check_response(const struct json_object* parsed_result){
     return 0;
 }
 
-RESULT get_title_list(char* result){
+RESULT_SEARCH get_title_list(char* result){
     struct json_object* parsed_result;
     struct json_object* search;
     struct json_object* movie;
@@ -31,7 +31,7 @@ RESULT get_title_list(char* result){
     char** titles;
     char** years;
     char** ids;
-    RESULT output;
+    RESULT_SEARCH output;
 
     size_t n_movie;
 
@@ -41,7 +41,7 @@ RESULT get_title_list(char* result){
     // if no film found then false
     if (check_response(parsed_result)){
         output.titles = NULL;
-        return output; // return RESULT with titles NULL when film not found
+        return output; // return RESULT_SEARCH with titles NULL when film not found
     }
 
     json_object_object_get_ex(parsed_result, "Search", &search);
