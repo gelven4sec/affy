@@ -10,7 +10,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+struct Movie* get_dataset(){
+    struct Movie* dataset;
 
+    FILE* dataset_file = fopen("../dataset/data.tsv", "r"); // dataset local .tsv file
+    if (dataset_file == NULL){
+        printf("\nCould not read dataset file.\nExit...");
+        exit(EXIT_FAILURE);
+    }
+    dataset = init_dataset(dataset_file);
+    fclose(dataset_file);
+
+    return dataset;
+}
 
 // return the fields per lines
 char** get_fields(char* line){
