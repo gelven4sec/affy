@@ -1,5 +1,5 @@
 //
-// Created by sven-eliasen on 1/8/2021.
+// Created by AFFY developers on 1/8/2021.
 //
 // This is the main source file of the AFFY project.
 // AFFY is a Content-Based recommender system for movies.
@@ -25,20 +25,6 @@ char** create_liked(){
     list[2] = "tt1130884";
 
     return list;
-}
-
-void on_search_entry_activate(GtkEntry* search_entry, GtkBox* search_container){
-    const gchar* text;
-
-    // if entry empty then do nothing
-    if (gtk_entry_get_text_length(GTK_ENTRY(search_entry)) == 0) {return;}
-
-    // get input from entry
-    text = gtk_entry_get_text(GTK_ENTRY(search_entry));
-    g_print("%s", text);
-
-    //gtk_box_pack_start(GTK_BOX(search_container), )
-
 }
 
 // main
