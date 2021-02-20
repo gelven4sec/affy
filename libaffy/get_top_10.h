@@ -7,10 +7,10 @@
 
 #include "dataset.h"
 
-int* get_top_10(char* tconst, struct Movie* dataset);
+int* get_top_10(char* tconst, MOVIE* dataset);
 
-int* get_top_10_user(struct Movie user_profile, struct Movie* dataset, char** index_list, int nb);
+int* get_top_10_user(const MOVIE* user_profile, const MOVIE* dataset, char** index_list, int nb);
 
-int get_index(char* tconst, struct Movie* dataset);
+int get_index(char* tconst, const MOVIE* dataset);
 
 #endif //AFFY_GET_TOP_10_H

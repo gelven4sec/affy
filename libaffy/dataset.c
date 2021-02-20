@@ -10,8 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct Movie* get_dataset(){
-    struct Movie* dataset;
+MOVIE* get_dataset(){
+    MOVIE* dataset;
 
     FILE* dataset_file = fopen("../dataset/data.tsv", "r"); // dataset local .tsv file
     if (dataset_file == NULL){
@@ -88,7 +88,7 @@ struct Movie get_movie(char* line){
     int nb_genres;
     char** list = get_fields(line);
 
-    struct Movie movie = {
+    MOVIE movie = {
             list[0],
             list[1],
             get_words(list[2], &nb_genres),
@@ -102,12 +102,12 @@ struct Movie get_movie(char* line){
 }
 
 // return full dataset
-struct Movie * init_dataset(FILE* stream){
-    struct Movie* dataset;
+struct Movie* init_dataset(FILE* stream){
+    MOVIE* dataset;
     char line[1024];
     int counter = 0;
 
-    dataset = malloc(sizeof(struct Movie)*SIZE);
+    dataset = malloc(sizeof(MOVIE)*SIZE);
     if (dataset == NULL) {
         printf("Failed to allocate memory to dataset.");
         exit(EXIT_FAILURE);
@@ -124,20 +124,20 @@ struct Movie * init_dataset(FILE* stream){
     return dataset;
 }
 
-void free_nconsts(struct Movie* movie){
+void free_nconsts(const MOVIE* movie){
     for (int i = 0; i < movie->nb_nconst; i++){
         free(movie->nconsts[i]);
     }
 }
 
-void free_genres(struct Movie* movie){
+void free_genres(const MOVIE* movie){
     for (int i = 0; i < movie->nb_genres; i++){
         free(movie->genres[i]);
     }
 }
 
 // free dataset
-void free_dataset(struct Movie* dataset){
+void free_dataset(const MOVIE* dataset){
     for (int i = 0; i < SIZE; i++){
         free(dataset[i].tconst);
         free(dataset[i].primaryTile);

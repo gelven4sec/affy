@@ -23,9 +23,9 @@ char** create_liked(){
 
 // main
 int main() {
-    /*struct Movie *dataset; // the list of movies and their details
+    MOVIE* dataset; // the list of movies and their details
     char** liked = create_liked();
-    struct Movie user_profile;
+    MOVIE user_profile;
     int* result_list;
 
 
@@ -34,7 +34,7 @@ int main() {
 
     user_profile = create_user_profile(liked, 3, dataset);
 
-    result_list = get_top_10_user(user_profile, dataset, liked, 3); // liked is freed here for now
+    result_list = get_top_10_user(&user_profile, dataset, liked, 3); // liked is freed here for now
 
     // DEBUG
     for (int i = 0; i < 10; ++i) {
@@ -45,14 +45,14 @@ int main() {
     free(user_profile.nconsts);
     free(result_list);
     free_dataset(dataset);
-    free(dataset);*/
+    free(dataset);
 
-    RESULT_SEARCH output;
+    /*RESULT_SEARCH output;
     output = search();
 
     for (int i = 0; i < output.nb; ++i) {
         printf("\n%d\t%s\t%s\t%s", i, output.titles[i], output.years[i], output.ids[i]);
-    }
+    }*/
 
     return 0;
 }

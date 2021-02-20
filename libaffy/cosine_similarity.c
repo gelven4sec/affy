@@ -23,32 +23,32 @@ int check_duplicate(char** list, int nb, char* str){
     return 1;
 }
 
-char** init_bag_words(struct Movie movie1, struct Movie movie2, int* counter, int* counter_genres){
-    int size = movie1.nb_genres + movie1.nb_nconst + movie2.nb_genres + movie2.nb_nconst;
+char** init_bag_words(const MOVIE* movie1, const MOVIE* movie2, int* counter, int* counter_genres){
+    int size = movie1->nb_genres + movie1->nb_nconst + movie2->nb_genres + movie2->nb_nconst;
     char** list = malloc(sizeof(char *) * size);
 
-    for (int i = 0; i < movie1.nb_genres; ++i) {
-        list[i] = movie1.genres[i];
+    for (int i = 0; i < movie1->nb_genres; ++i) {
+        list[i] = movie1->genres[i];
         (*counter)++;
         (*counter_genres)++;
     }
 
-    for (int i = 0; i < movie2.nb_genres; ++i) {
-        if (check_duplicate(movie1.genres, movie1.nb_genres, movie2.genres[i]) == 1){
-            list[(*counter)] = movie2.genres[i];
+    for (int i = 0; i < movie2->nb_genres; ++i) {
+        if (check_duplicate(movie1->genres, movie1->nb_genres, movie2->genres[i]) == 1){
+            list[(*counter)] = movie2->genres[i];
             (*counter)++;
             (*counter_genres)++;
         }
     }
 
-    for (int i = 0; i < movie1.nb_nconst; ++i) {
-        list[(*counter)] = movie1.nconsts[i];
+    for (int i = 0; i < movie1->nb_nconst; ++i) {
+        list[(*counter)] = movie1->nconsts[i];
         (*counter)++;
     }
 
-    for (int i = 0; i < movie2.nb_nconst; ++i) {
-        if (check_duplicate(movie1.nconsts, movie1.nb_nconst, movie2.nconsts[i]) == 1){
-            list[(*counter)] = movie2.nconsts[i];
+    for (int i = 0; i < movie2->nb_nconst; ++i) {
+        if (check_duplicate(movie1->nconsts, movie1->nb_nconst, movie2->nconsts[i]) == 1){
+            list[(*counter)] = movie2->nconsts[i];
             (*counter)++;
         }
     }
@@ -107,12 +107,12 @@ double* init_list_idf(char** list, int counter, int counter_genres){
     return list_idf;
 }
 
-void init_vector(double* vector, struct Movie movie, int counter, int counter_genres, char** list, const double* list_idf){
+void init_vector(double* vector, const MOVIE* movie, int counter, int counter_genres, char** list, const double* list_idf){
     for (int i = 0; i < counter; ++i) {
         char* str1 = list[i];
         if (i < counter_genres){
-            for (int j = 0; j < movie.nb_genres; j++){
-                char* str2 = movie.genres[j];
+            for (int j = 0; j < movie->nb_genres; j++){
+                char* str2 = movie->genres[j];
                 if (strcmp(str1, str2) == 0){
                     vector[i] = list_idf[i];
                     break;
@@ -122,8 +122,8 @@ void init_vector(double* vector, struct Movie movie, int counter, int counter_ge
 
             }
         } else {
-            for (int j = 0; j < movie.nb_nconst; j++){
-                char* str2 = movie.nconsts[j];
+            for (int j = 0; j < movie->nb_nconst; j++){
+                char* str2 = movie->nconsts[j];
                 if (strcmp(str1, str2) == 0){
                     vector[i] = list_idf[i];
                     break;
@@ -179,7 +179,7 @@ double cosine_similarity(const double* x, const double* y, int counter){
 }
 
 
-double get_cosine_similarity(struct Movie movie1, struct Movie movie2){
+double get_cosine_similarity(const MOVIE* movie1, const MOVIE* movie2){
     int counter = 0;
     int counter_genres = 0;
     char** list = init_bag_words(movie1, movie2, &counter, &counter_genres);
