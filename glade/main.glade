@@ -9,7 +9,7 @@
     <property name="window_position">center</property>
     <property name="default_width">800</property>
     <property name="default_height">600</property>
-    <property name="icon">CLionProjects/affy/img/video.svg</property>
+    <property name="icon">../img/video.svg</property>
     <child type="titlebar">
       <placeholder/>
     </child>
