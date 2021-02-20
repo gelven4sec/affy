@@ -13,6 +13,11 @@
 #include "libaffy/parse_json.h"
 #include "libaffy/request.h"
 
+// GLOBAL VAR (not proud of, but gtk oblige)
+char apikey_global[9];
+MOVIE* dataset_global;
+
+// DEBUG
 char** create_liked(){
     char** list = malloc(sizeof(char*) * 3);
     list[0] = "tt0105236";
@@ -20,6 +25,16 @@ char** create_liked(){
     list[2] = "tt1130884";
 
     return list;
+}
+
+void on_search_entry_activate(GtkEntry* search_entry, gpointer* ptr){
+    const gchar* text;
+
+    // get input from entry
+    text = gtk_entry_get_text(GTK_ENTRY(search_entry));
+    g_print("%s", text);
+
+
 }
 
 // main
@@ -60,8 +75,11 @@ int main(int argc, char **argv) {
     GtkBuilder *builder = gtk_builder_new ();
 
     gtk_builder_add_from_file (builder, "../glade/main.glade", NULL);
-    GtkWidget *win = (GtkWidget *) gtk_builder_get_object (builder,"main_window");
+    GtkWidget* win = (GtkWidget*) gtk_builder_get_object (builder,"main_window");
     gtk_builder_connect_signals(builder, NULL);
+
+    //GtkWidget* search_container = (GtkWidget*) gtk_builder_get_object(builder, "search_container");
+
 
     gtk_widget_show_all (win);
     gtk_main ();
