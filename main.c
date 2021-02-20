@@ -12,6 +12,7 @@
 #include "libaffy/create_profile.h"
 #include "libaffy/parse_json.h"
 #include "libaffy/request.h"
+#include "libaffy/search_gui.h"
 
 // GLOBAL VAR (not proud of, but gtk oblige)
 char apikey_global[9];
