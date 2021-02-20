@@ -27,13 +27,17 @@ char** create_liked(){
     return list;
 }
 
-void on_search_entry_activate(GtkEntry* search_entry, gpointer* ptr){
+void on_search_entry_activate(GtkEntry* search_entry, GtkBox* search_container){
     const gchar* text;
+
+    // if entry empty then do nothing
+    if (gtk_entry_get_text_length(GTK_ENTRY(search_entry)) == 0) {return;}
 
     // get input from entry
     text = gtk_entry_get_text(GTK_ENTRY(search_entry));
     g_print("%s", text);
 
+    //gtk_box_pack_start(GTK_BOX(search_container), )
 
 }
 
@@ -77,8 +81,6 @@ int main(int argc, char **argv) {
     gtk_builder_add_from_file (builder, "../glade/main.glade", NULL);
     GtkWidget* win = (GtkWidget*) gtk_builder_get_object (builder,"main_window");
     gtk_builder_connect_signals(builder, NULL);
-
-    //GtkWidget* search_container = (GtkWidget*) gtk_builder_get_object(builder, "search_container");
 
 
     gtk_widget_show_all (win);
