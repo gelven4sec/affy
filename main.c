@@ -6,6 +6,7 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
+#include <gtk/gtk.h>
 #include "libaffy/dataset.h"
 #include "libaffy/get_top_10.h"
 #include "libaffy/create_profile.h"
@@ -22,8 +23,8 @@ char** create_liked(){
 }
 
 // main
-int main() {
-    MOVIE* dataset; // the list of movies and their details
+int main(int argc, char **argv) {
+    /*MOVIE* dataset; // the list of movies and their details
     char** liked = create_liked();
     MOVIE user_profile;
     int* result_list;
@@ -47,12 +48,23 @@ int main() {
     free_dataset(dataset);
     free(dataset);
 
-    /*RESULT_SEARCH output;
+    RESULT_SEARCH output;
     output = search();
 
     for (int i = 0; i < output.nb; ++i) {
         printf("\n%d\t%s\t%s\t%s", i, output.titles[i], output.years[i], output.ids[i]);
     }*/
+
+    gtk_init (&argc, &argv);
+
+    GtkBuilder *builder = gtk_builder_new ();
+
+    gtk_builder_add_from_file (builder, "../glade/window.glade", NULL);
+    GtkWidget *win = (GtkWidget *) gtk_builder_get_object (builder,"window1");
+    gtk_builder_connect_signals(builder, NULL);
+
+    gtk_widget_show_all (win);
+    gtk_main ();
 
     return 0;
 }
