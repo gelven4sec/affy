@@ -5,20 +5,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
-#include "parse_json.h"
 
-int watchlist() {
+char** watchlist(size_t* counter) {
     FILE *file;
     unsigned long n;
-    char **list;
+    char** list;
     char id_tmp[1024];
-    unsigned int counter = 0;
+    char* line = NULL;
+    size_t line_size = 0;
+    *counter = 0;
 
     //Check if file exist
     file = fopen("../dataset/watchlist.txt", "r");
     if (file == NULL) {
         printf("File doesn't exist");
-        return 1;
+        return NULL;
     }
 
     printf("File exists");
@@ -27,30 +28,35 @@ int watchlist() {
 
     n = ftell(file);
 
-    if ( n==0 ) {
+    if (n == 0) {
         printf("\nFile is empty");
         fclose(file);
-        return 2;
+        return NULL;
 
     } else {
         printf("\nFile isn't empty. \n");
-        list = malloc(sizeof(char*) * (n/10));
+        list = malloc(sizeof(char*) * (n/10)+1);
+
+        fseek(file,0 ,SEEK_SET);
 
         while (fgets(id_tmp, 1024, file)){
             char* tmp = strdup(id_tmp);
 
-            list[counter] = tmp;
-            counter++;
+            // remove new line character from string
+            char* temp = strchr(tmp, '\n');
+            *temp = '\0';
 
-            //free(tmp);
+            list[*counter] = tmp;
+            (*counter)++;
+
         }
+        list[*counter] = NULL;
 
-        printf("\n%s", list[0]);
-        free(list);
     }
 
     fclose(file);
-    return 0;
+
+    return list;
 }
 
 

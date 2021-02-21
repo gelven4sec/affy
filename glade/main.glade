@@ -24,6 +24,7 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="stack">main_stack</property>
+            <signal name="button-press-event" handler="test" swapped="no"/>
           </object>
           <packing>
             <property name="resize">False</property>
@@ -180,10 +181,18 @@
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
+                  <object class="GtkGrid" id="watchlist_grid">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="row_spacing">20</property>
+                    <property name="row_homogeneous">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </object>
               <packing>

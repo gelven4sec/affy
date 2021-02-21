@@ -5,7 +5,8 @@
 #ifndef AFFY_WATCHLIST_H
 #define AFFY_WATCHLIST_H
 
+#include <stdio.h>
 
-int watchlist();
+char** watchlist(size_t* counter);
 
 #endif //AFFY_WATCHLIST_H
