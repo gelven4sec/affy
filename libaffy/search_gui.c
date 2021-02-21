@@ -37,6 +37,7 @@ void on_search_entry_activate(GtkEntry* search_entry, GtkGrid* search_grid){
     } else {
         // iterate through result to print titles
         for (int i = 0; i < result.nb; ++i) {
+            char title_bold[255];
             // todo: check if in watchlist
 
             // add a row
@@ -44,7 +45,8 @@ void on_search_entry_activate(GtkEntry* search_entry, GtkGrid* search_grid){
 
             // create widgets
             GtkWidget* title = gtk_label_new(result.titles[i]);
-            gtk_label_set_justify(GTK_LABEL(title), GTK_JUSTIFY_LEFT);
+            sprintf(title_bold, "<b>%s</b>", result.titles[i]);
+            gtk_label_set_markup(GTK_LABEL(title), title_bold);
             gtk_label_set_selectable(GTK_LABEL(title), TRUE);
             GtkWidget* year = gtk_label_new(result.years[i]);
             GtkWidget* id = gtk_label_new(result.ids[i]);
