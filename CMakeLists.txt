@@ -12,5 +12,5 @@ link_directories(${GTK3_LIBRARY_DIRS})
 
 add_definitions(${GTK3_CFLAGS_OTHER})
 
-add_executable(affy main.c libaffy/dataset.c libaffy/dataset.h libaffy/cosine_similarity.c libaffy/cosine_similarity.h libaffy/get_top_10.c libaffy/get_top_10.h libaffy/create_profile.c libaffy/create_profile.h libaffy/request.c libaffy/request.h libaffy/parse_json.c libaffy/parse_json.h libaffy/search_gui.c libaffy/search_gui.h)
+add_executable(affy main.c libaffy/dataset.c libaffy/dataset.h libaffy/cosine_similarity.c libaffy/cosine_similarity.h libaffy/get_top_10.c libaffy/get_top_10.h libaffy/create_profile.c libaffy/create_profile.h libaffy/request.c libaffy/request.h libaffy/parse_json.c libaffy/parse_json.h libaffy/search_gui.c libaffy/search_gui.h libaffy/watchlist.c libaffy/watchlist.h)
 target_link_libraries(affy m curl json-c ${GTK3_LIBRARIES})
