@@ -6,6 +6,14 @@
 #include "request.h"
 #include "parse_json.h"
 
+void on_btn_add_clicked(GtkButton* btn, GtkLabel* id){
+    const gchar* movie_id;
+
+    gtk_widget_hide(GTK_WIDGET(btn));
+    movie_id = gtk_label_get_text(id);
+    g_print("%s\n", movie_id);
+}
+
 void clean_grid(GtkGrid* grid){
     for (int i = 10; i > -1; --i) {
         gtk_grid_remove_row(GTK_GRID(grid), i);
@@ -54,7 +62,7 @@ void on_search_entry_activate(GtkEntry* search_entry, GtkGrid* search_grid){
             GtkWidget* id = gtk_label_new(result.ids[i]);
 
             GtkWidget* btn_add = gtk_button_new_from_icon_name("gtk-add", GTK_ICON_SIZE_BUTTON);
-            //g_signal_connect (btn_add, "clicked", G_CALLBACK (end_program), NULL);
+            g_signal_connect (btn_add, "clicked", G_CALLBACK (on_btn_add_clicked), id);
 
             // insert widget
             gtk_grid_attach(GTK_GRID(search_grid), title, 0, i, 1, 1);
