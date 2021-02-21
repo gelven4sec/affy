@@ -6,6 +6,13 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 
+void free_watchlist(char** list){
+    for (int i = 0; list[i] != NULL; ++i) {
+        free(list[i]);
+    }
+    free(list);
+}
+
 char** watchlist(size_t* counter) {
     FILE *file;
     unsigned long n;
@@ -18,23 +25,18 @@ char** watchlist(size_t* counter) {
     //Check if file exist
     file = fopen("../dataset/watchlist.txt", "r");
     if (file == NULL) {
-        printf("File doesn't exist");
         return NULL;
     }
-
-    printf("File exists");
 
     fseek(file,0 ,SEEK_END);
 
     n = ftell(file);
 
     if (n == 0) {
-        printf("\nFile is empty");
         fclose(file);
         return NULL;
 
     } else {
-        printf("\nFile isn't empty. \n");
         list = malloc(sizeof(char*) * (n/10)+1);
 
         fseek(file,0 ,SEEK_SET);
@@ -51,7 +53,6 @@ char** watchlist(size_t* counter) {
 
         }
         list[*counter] = NULL;
-
     }
 
     fclose(file);
