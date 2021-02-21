@@ -39,11 +39,11 @@ char* read_input(){
 }
 
 // takes request's argument to return usable url
-char* get_url(char* apikey, const char* title, unsigned int page){
+char* get_url(char* apikey, char* title, unsigned int page){
     char* url = malloc(sizeof(char) * 1024);
 
     sprintf(url, "http://www.omdbapi.com/?s=%s&apikey=%s&page=%u&type=movie", title, apikey, page);
-    //free(title);
+    free(title);
 
     return url;
 
@@ -57,13 +57,13 @@ static size_t write_result(void *ptr, size_t size, size_t nmemb, void *stream){
 
 
 
-RESULT_SEARCH search(const char* title) {
+RESULT_SEARCH search(char* title) {
     char* url;
-    //char* title;
     char* temp;
 
-    temp = strchr(title, ' ');
-    if (temp != NULL) {*temp = '+';} // cant let a space in http request
+    while ((temp = strchr(title, ' ')) != NULL){
+        *temp = '+';
+    }
 
     url = get_url("cab5fef3", title, 1); // free title here
 

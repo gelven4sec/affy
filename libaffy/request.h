@@ -7,6 +7,6 @@
 
 #include "parse_json.h"
 
-RESULT_SEARCH search(const char* title);
+RESULT_SEARCH search(char* title);
 
 #endif //TESTING_SEARCH_H
