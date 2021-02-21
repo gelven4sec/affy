@@ -6,6 +6,6 @@
 #define AFFY_WATCHLIST_H
 
 
-void watchlist();
+int watchlist();
 
 #endif //AFFY_WATCHLIST_H

@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
         printf("\n%d\t%s\t%s\t%s", i, output.titles[i], output.years[i], output.ids[i]);
     }*/
 
-    gtk_init (&argc, &argv);
+    /*gtk_init (&argc, &argv);
 
     GtkBuilder *builder = gtk_builder_new ();
 
@@ -72,50 +72,10 @@ int main(int argc, char **argv) {
     GtkWidget* win = (GtkWidget*) gtk_builder_get_object (builder,"main_window");
     gtk_builder_connect_signals(builder, NULL);
 
-
     gtk_widget_show_all (win);
-    gtk_main ();
+    gtk_main ();*/
 
-
-    //Check if file exist
-    if (file = fopen("watchlist.txt", "r"))
-    {
-        fclose(file);
-        printf("File exists");
-    }
-    else
-    {
-        printf("File doesn't exist");
-    }
-
-    //Check if file is empty
-
-    fseek(file,0,SEEK_END);
-    n=ftell(file);
-    if (n==0){
-        printf("\nFile is empty");
-    } else {
-        printf("\nFile isn't empty. \n");
-
-        file = fopen("watchlist.txt", "r");
-
-        /* File open success */
-        printf("File opened successfully\n\n");
-
-        do
-        {
-            /* Read single character from file */
-            list = fgetc(file);
-
-            /* Print character read on console */
-            putchar(list);
-
-        } while(list != EOF); /* Repeat this if last read character is not EOF */
-
-
-        /* Done with this file, close file to release resource */
-        fclose(file);
-    }
+    printf("\nReturn : %d", watchlist());
 
     return 0;
 }
