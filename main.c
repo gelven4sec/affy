@@ -12,11 +12,17 @@
 #include "libaffy/create_profile.h"
 #include "libaffy/parse_json.h"
 #include "libaffy/request.h"
+#include "libaffy/watchlist.h"
 #include "libaffy/search_gui.h"
 
 // GLOBAL VAR (not proud of, but gtk oblige)
-char apikey_global[9];
-MOVIE* dataset_global;
+char apikey[9];
+MOVIE* dataset;
+size_t watchlist_size;
+
+void test(){
+    printf("DEBUG!!");
+}
 
 // DEBUG
 char** create_liked(){
@@ -28,8 +34,22 @@ char** create_liked(){
     return list;
 }
 
+void free_watchlist(char** list){
+    for (int i = 0; list[i] != NULL; ++i) {
+        free(list[i]);
+    }
+    free(list);
+}
+
+void fill_watchlist_grid(char** list){
+
+}
+
 // main
 int main(int argc, char **argv) {
+    FILE* file;
+    int n;
+    char** list;
     /*MOVIE* dataset; // the list of movies and their details
     char** liked = create_liked();
     MOVIE user_profile;
@@ -73,5 +93,12 @@ int main(int argc, char **argv) {
     gtk_widget_show_all (win);
     gtk_main ();
 
+    list = watchlist(&watchlist_size);
+
+    /*for (int i = 0; list[i] != NULL; ++i) {
+        printf("%s", list[i]);
+    }*/
+
+    free_watchlist(list);
     return 0;
 }
