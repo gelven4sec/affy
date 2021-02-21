@@ -7,7 +7,7 @@
 #include "parse_json.h"
 
 void clean_grid(GtkGrid* grid){
-    for (int i = 100; i > -1; --i) {
+    for (int i = 10; i > -1; --i) {
         gtk_grid_remove_row(GTK_GRID(grid), i);
     }
 }
@@ -48,14 +48,19 @@ void on_search_entry_activate(GtkEntry* search_entry, GtkGrid* search_grid){
             sprintf(title_bold, "<b>%s</b>", result.titles[i]);
             gtk_label_set_markup(GTK_LABEL(title), title_bold);
             gtk_label_set_selectable(GTK_LABEL(title), TRUE);
+            gtk_label_set_justify(GTK_LABEL(title), GTK_JUSTIFY_CENTER);
+
             GtkWidget* year = gtk_label_new(result.years[i]);
             GtkWidget* id = gtk_label_new(result.ids[i]);
+
+            GtkWidget* btn_add = gtk_button_new_from_icon_name("gtk-add", GTK_ICON_SIZE_BUTTON);
+            //g_signal_connect (btn_add, "clicked", G_CALLBACK (end_program), NULL);
 
             // insert widget
             gtk_grid_attach(GTK_GRID(search_grid), title, 0, i, 1, 1);
             gtk_grid_attach(GTK_GRID(search_grid), year, 1, i, 1, 1);
             gtk_grid_attach(GTK_GRID(search_grid), id, 2, i, 1, 1);
-
+            gtk_grid_attach(GTK_GRID(search_grid), btn_add, 3, i, 1, 1);
         }
     }
 
