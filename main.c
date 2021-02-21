@@ -64,11 +64,11 @@ int main(int argc, char **argv) {
     gtk_init (&argc, &argv);
 
     GtkBuilder *builder = gtk_builder_new ();
+    builder_global = builder;
 
     gtk_builder_add_from_file (builder, "../glade/main.glade", NULL);
     GtkWidget* win = (GtkWidget*) gtk_builder_get_object (builder,"main_window");
     gtk_builder_connect_signals(builder, NULL);
-
 
     gtk_widget_show_all (win);
     gtk_main ();
