@@ -5,6 +5,8 @@
 #ifndef TESTING_SEARCH_H
 #define TESTING_SEARCH_H
 
-RESULT_SEARCH search();
+#include "parse_json.h"
+
+RESULT_SEARCH search(char* title);
 
 #endif //TESTING_SEARCH_H

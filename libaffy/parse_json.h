@@ -13,6 +13,8 @@ struct Result{
 };
 typedef struct Result RESULT_SEARCH;
 
+void free_search_result(RESULT_SEARCH result);
+
 struct ResultTitle{
     char* test; //todo: determine what information to take
 };

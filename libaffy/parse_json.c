@@ -6,6 +6,29 @@
 #include <json-c/json.h>
 #include "parse_json.h"
 
+void free_search_result(RESULT_SEARCH result){
+    // if null then nothing was found then dont need to free
+    if (result.titles != NULL){
+        // free titles
+        for (int i = 0; i < result.nb; ++i) {
+            free(result.titles[i]);
+        }
+        free(result.titles);
+
+        // free years
+        for (int i = 0; i < result.nb; ++i) {
+            free(result.years[i]);
+        }
+        free(result.years);
+
+        // free ids
+        for (int i = 0; i < result.nb; ++i) {
+            free(result.ids[i]);
+        }
+        free(result.ids);
+    }
+}
+
 int check_response(const struct json_object* parsed_result){
     struct json_object* response;
     struct json_object* error;
@@ -66,6 +89,8 @@ RESULT_SEARCH get_title_list(char* result){
     output.years = years;
     output.ids = ids;
     output.nb = n_movie;
+
+    free(parsed_result);
 
     return output;
 }
