@@ -57,15 +57,13 @@ static size_t write_result(void *ptr, size_t size, size_t nmemb, void *stream){
 
 
 
-RESULT_SEARCH search() {
+RESULT_SEARCH search(char* title) {
     char* url;
-    char* title;
     char* temp;
 
-    printf("\nPlease, enter the title of the movie :" );
-    title = read_input();
-    temp = strchr(title, ' ');
-    if (temp != NULL) {*temp = '+';} // cant let a space in http request
+    while ((temp = strchr(title, ' ')) != NULL){
+        *temp = '+';
+    }
 
     url = get_url("cab5fef3", title, 1); // free title here
 

@@ -5,6 +5,8 @@
 #ifndef AFFY_SEARCH_GUI_H
 #define AFFY_SEARCH_GUI_H
 
-void on_search_entry_activate(GtkEntry* search_entry, GtkBox* search_container);
+GtkBuilder *builder_global;
+
+void on_search_entry_activate(GtkEntry* search_entry, GtkGrid* search_grid);
 
 #endif //AFFY_SEARCH_GUI_H

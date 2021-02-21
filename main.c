@@ -13,6 +13,7 @@
 #include "libaffy/parse_json.h"
 #include "libaffy/request.h"
 #include "libaffy/watchlist.h"
+#include "libaffy/search_gui.h"
 
 // GLOBAL VAR (not proud of, but gtk oblige)
 char apikey[9];
@@ -83,6 +84,7 @@ int main(int argc, char **argv) {
     gtk_init (&argc, &argv);
 
     GtkBuilder *builder = gtk_builder_new ();
+    builder_global = builder;
 
     gtk_builder_add_from_file (builder, "../glade/main.glade", NULL);
     GtkWidget* win = (GtkWidget*) gtk_builder_get_object (builder,"main_window");
