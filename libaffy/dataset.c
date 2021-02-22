@@ -83,7 +83,7 @@ char** get_words(char* line, int* counter){
 }
 
 // return movie structure for dataset
-struct Movie get_movie(char* line){
+MOVIE get_movie(char* line){
     int nb_nconsts;
     int nb_genres;
     char** list = get_fields(line);
@@ -102,7 +102,7 @@ struct Movie get_movie(char* line){
 }
 
 // return full dataset
-struct Movie* init_dataset(FILE* stream){
+MOVIE* init_dataset(FILE* stream){
     MOVIE* dataset;
     char line[1024];
     int counter = 0;

@@ -12,7 +12,7 @@ void free_watchlist_char(char** list){
     for (int i = 0; i < watchlist_size; ++i) {
         free(list[i]);
     }
-    free(watchlist_array);
+    free(list);
 }
 
 int* get_watchlist_indexes(char** list){
@@ -84,6 +84,14 @@ void fill_watchlist_grid(){
 
     // empty the grid
     clean_watchlist_grid(GTK_GRID(watchlist_grid));
+
+    // if no file or corrupt
+    if (watchlist_array == NULL){
+        GtkWidget* not_found = gtk_label_new("List empty... (You've never seen a movie ?)"); // In case it's not found
+
+        gtk_grid_insert_row(GTK_GRID(watchlist_grid), 0);
+        gtk_grid_attach(GTK_GRID(watchlist_grid), not_found, 0, 0, 1, 1);
+    }
 
     for (int i = 0; i < watchlist_size; ++i) {
         char title_bold[255];
