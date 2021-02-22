@@ -7,6 +7,11 @@
 
 #include <stdio.h>
 
-char** watchlist(size_t* counter);
+size_t watchlist_size;
+int* watchlist_array;
+
+int* watchlist(size_t* counter);
+
+void fill_watchlist_grid();
 
 #endif //AFFY_WATCHLIST_H
