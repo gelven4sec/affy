@@ -12,7 +12,7 @@ void free_watchlist_char(char** list){
     for (int i = 0; i < watchlist_size; ++i) {
         free(list[i]);
     }
-    free(watchlist_array);
+    free(list);
 }
 
 int* get_watchlist_indexes(char** list){

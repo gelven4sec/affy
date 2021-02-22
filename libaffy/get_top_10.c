@@ -89,7 +89,6 @@ int* get_top_10(char* tconst, MOVIE* dataset){
 int* get_top_10_user(const MOVIE* user_profile, const MOVIE* dataset, const int* list_index, int nb){
     double* list = malloc(sizeof(double) * SIZE);
     int* result_list;
-    //int list_index[nb];
 
     for (int i = 0; i < SIZE; ++i) {
         list[i] = get_cosine_similarity(user_profile, &dataset[i]);
@@ -101,6 +100,8 @@ int* get_top_10_user(const MOVIE* user_profile, const MOVIE* dataset, const int*
 
     result_list = bubble_sort(list);
 
+    free(user_profile->genres);
+    free(user_profile->nconsts);
     free(list);
     return result_list;
 }
