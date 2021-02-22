@@ -9,7 +9,7 @@
 
 int* get_top_10(char* tconst, MOVIE* dataset);
 
-int* get_top_10_user(const MOVIE* user_profile, const MOVIE* dataset, char** index_list, int nb);
+int* get_top_10_user(const MOVIE* user_profile, const MOVIE* dataset, const int* index_list, int nb);
 
 int get_index(char* tconst, const MOVIE* dataset);
 

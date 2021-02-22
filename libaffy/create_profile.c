@@ -26,19 +26,14 @@ void init_nconsts(struct Movie movie, char** list, int* counter){
     }
 }
 
-struct Movie create_user_profile(char** list, int nb, struct Movie* dataset){
-    int list_index[nb];
+MOVIE create_user_profile(const int* list_index, int nb, MOVIE* dataset){
+    //int list_index[nb];
     int counter_nconst = 0;
     int counter_genres = 0;
     int size_nconst = 0;
     int size_genres = 0;
     char** list_genres;
     char** list_nconst;
-
-
-    for (int i = 0; i < nb; ++i) {
-        list_index[i] = get_index(list[i], dataset);
-    }
 
     for (int i = 0; i < nb; ++i) {
         size_genres = size_genres + dataset[list_index[i]].nb_genres;
@@ -56,7 +51,7 @@ struct Movie create_user_profile(char** list, int nb, struct Movie* dataset){
         init_nconsts(dataset[list_index[i]], list_nconst, &counter_nconst);
     }
 
-    struct Movie user_profile = {
+    MOVIE user_profile = {
             "user-profile",
             "user-profile",
             list_genres,

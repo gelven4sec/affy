@@ -86,15 +86,10 @@ int* get_top_10(char* tconst, MOVIE* dataset){
     return result_list;
 }
 
-int* get_top_10_user(const MOVIE* user_profile, const MOVIE* dataset, char** liked_list, int nb){
+int* get_top_10_user(const MOVIE* user_profile, const MOVIE* dataset, const int* list_index, int nb){
     double* list = malloc(sizeof(double) * SIZE);
     int* result_list;
-    int list_index[nb];
-
-    for (int i = 0; i < nb; ++i) {
-        list_index[i] = get_index(liked_list[i], dataset);
-    }
-    free(liked_list);
+    //int list_index[nb];
 
     for (int i = 0; i < SIZE; ++i) {
         list[i] = get_cosine_similarity(user_profile, &dataset[i]);
