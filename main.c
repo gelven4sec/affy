@@ -6,41 +6,10 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
-#include <gtk/gtk.h>
-#include "libaffy/dataset.h"
-#include "libaffy/get_top_10.h"
-#include "libaffy/create_profile.h"
-#include "libaffy/parse_json.h"
-#include "libaffy/request.h"
 #include "libaffy/init_gui.h"
-
-// GLOBAL VAR (not proud of, but gtk oblige)
-char apikey[9];
-MOVIE* dataset;
-
-void test(){
-    printf("DEBUG!!");
-}
-
-// DEBUG
-char** create_liked(){
-    char** list = malloc(sizeof(char*) * 3);
-    list[0] = "tt0105236";
-    list[1] = "tt0110912";
-    list[2] = "tt1130884";
-
-    return list;
-}
-
-void fill_watchlist_grid(char** list){
-
-}
 
 // main
 int main(int argc, char **argv) {
-    FILE* file;
-    int n;
-    char** list;
     /*MOVIE* dataset; // the list of movies and their details
     char** liked = create_liked();
     MOVIE user_profile;
@@ -56,21 +25,12 @@ int main(int argc, char **argv) {
 
     // DEBUG
     for (int i = 0; i < 10; ++i) {
-        printf("\n%d : %s", result_list[i], dataset[result_list[i]].primaryTile);
+        printf("\n%d : %s", result_list[i], dataset[result_list[i]].primaryTitle);
     }
 
     free(user_profile.genres);
     free(user_profile.nconsts);
-    free(result_list);
-    free_dataset(dataset);
-    free(dataset);
-
-    RESULT_SEARCH output;
-    output = search();
-
-    for (int i = 0; i < output.nb; ++i) {
-        printf("\n%d\t%s\t%s\t%s", i, output.titles[i], output.years[i], output.ids[i]);
-    }*/
+    */
 
     init_gui(argc, argv);
 

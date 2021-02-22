@@ -60,6 +60,7 @@ void on_search_entry_activate(GtkEntry* search_entry, GtkGrid* search_grid){
 
             GtkWidget* year = gtk_label_new(result.years[i]);
             GtkWidget* id = gtk_label_new(result.ids[i]);
+            gtk_label_set_selectable(GTK_LABEL(id), TRUE);
 
             GtkWidget* btn_add = gtk_button_new_from_icon_name("gtk-add", GTK_ICON_SIZE_BUTTON);
             g_signal_connect (btn_add, "clicked", G_CALLBACK (on_btn_add_clicked), id);

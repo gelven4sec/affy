@@ -137,13 +137,14 @@ void free_genres(const MOVIE* movie){
 }
 
 // free dataset
-void free_dataset(const MOVIE* dataset){
+void free_dataset(MOVIE* dataset){
     for (int i = 0; i < SIZE; i++){
         free(dataset[i].tconst);
-        free(dataset[i].primaryTile);
+        free(dataset[i].primaryTitle);
         free_genres(&dataset[i]);
         free_nconsts(&dataset[i]);
         free(dataset[i].genres);
         free(dataset[i].nconsts);
     }
+    free(dataset);
 }

@@ -8,10 +8,10 @@
 #include <stdio.h>
 
 size_t watchlist_size;
-char** watchlist_array;
+int* watchlist_array;
 
-void free_watchlist(char** list);
+int* watchlist(size_t* counter);
 
-char** watchlist(size_t* counter);
+void fill_watchlist_grid();
 
 #endif //AFFY_WATCHLIST_H

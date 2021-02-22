@@ -14,7 +14,7 @@
 // movie dataframe
 struct Movie{
     char* tconst;
-    char* primaryTile;
+    char* primaryTitle;
     char** genres;
     double rating;
     char** nconsts;
@@ -25,7 +25,7 @@ typedef struct Movie MOVIE;
 
 MOVIE* init_dataset(FILE* stream);
 
-void free_dataset(const MOVIE* dataset);
+void free_dataset(MOVIE* dataset);
 
 MOVIE* get_dataset();
 

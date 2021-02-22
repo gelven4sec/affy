@@ -90,7 +90,5 @@ RESULT_SEARCH get_title_list(char* result){
     output.ids = ids;
     output.nb = n_movie;
 
-    free(parsed_result);
-
     return output;
 }
