@@ -109,7 +109,7 @@ void fill_watchlist_grid(){
         GtkWidget* id = gtk_label_new(dataset[watchlist_array[i]].tconst);
 
         GtkWidget* btn_add = gtk_button_new_from_icon_name("gtk-delete", GTK_ICON_SIZE_BUTTON);
-        //g_signal_connect (btn_add, "clicked", G_CALLBACK (on_btn_add_clicked), id); //todo: delete movie from watchlist
+        //g_signal_connect (btn_add, "clicked", G_CALLBACK (remove_watchlist), id);
 
         // insert widget
         gtk_grid_attach(GTK_GRID(watchlist_grid), title, 0, i, 2, 1);
@@ -118,5 +118,9 @@ void fill_watchlist_grid(){
     }
 
     gtk_widget_show_all((GtkWidget *) watchlist_grid);
+}
+
+void remove_watchlist(GtkButton* btn, GtkLabel* lbl){
+
 }
 

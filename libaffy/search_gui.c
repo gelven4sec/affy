@@ -6,19 +6,41 @@
 #include "request.h"
 #include "parse_json.h"
 #include "init_gui.h"
+#include "watchlist.h"
+#include "get_top_10.h"
 
 void on_btn_add_clicked(GtkButton* btn, GtkLabel* id){
-    const gchar* movie_id;
+    char* movie_id;
+    int index;
 
     gtk_widget_hide(GTK_WIDGET(btn));
     movie_id = gtk_label_get_text(id);
-    g_print("%s\n", movie_id);
+
+    index = get_index(movie_id, dataset);
+
+    watchlist_size++;
+    watchlist_array = realloc(watchlist_array, watchlist_size);
+
+    watchlist_array[watchlist_size-1] = index;
+
 }
 
 void clean_grid(GtkGrid* grid){
     for (int i = 10; i > -1; --i) {
         gtk_grid_remove_row(GTK_GRID(grid), i);
     }
+}
+
+int check_in_array(char* id){
+    int index = get_index(id, dataset);
+
+    if (index == 0) { return 1;} // if 0, then not in dataset, then pop it
+
+    for (int i = 0; i < watchlist_size; ++i) {
+        if (index == watchlist_array[i]){return 1;}
+    }
+
+    return 0;
 }
 
 void on_search_entry_activate(GtkEntry* search_entry, GtkGrid* search_grid){
@@ -47,7 +69,8 @@ void on_search_entry_activate(GtkEntry* search_entry, GtkGrid* search_grid){
         // iterate through result to print titles
         for (int i = 0; i < result.nb; ++i) {
             char title_bold[255];
-            // todo: check if in watchlist
+
+            if (check_in_array(result.ids[i])) {continue;}
 
             // add a row
             gtk_grid_insert_row(GTK_GRID(search_grid), i);
