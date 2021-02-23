@@ -92,3 +92,19 @@ RESULT_SEARCH get_title_list(char* result){
 
     return output;
 }
+
+const char* get_apikey(char* buffer){
+    struct json_object* parsed_result;
+    struct json_object* apikey_obj;
+    const char* apikey;
+
+    parsed_result = json_tokener_parse(buffer);
+    if (parsed_result == NULL){
+        return NULL;
+    }
+
+    json_object_object_get_ex(parsed_result, "apikey", &apikey_obj);
+    apikey = json_object_get_string(apikey_obj);
+
+    return apikey;
+}

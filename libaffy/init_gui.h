@@ -10,6 +10,7 @@
 
 GtkBuilder *builder_global;
 MOVIE* dataset;
+const char* apikey_global;
 
 void init_gui(int argc, char **argv);
 

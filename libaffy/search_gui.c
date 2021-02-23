@@ -5,6 +5,7 @@
 #include "search_gui.h"
 #include "request.h"
 #include "parse_json.h"
+#include "init_gui.h"
 
 void on_btn_add_clicked(GtkButton* btn, GtkLabel* id){
     const gchar* movie_id;
@@ -34,7 +35,7 @@ void on_search_entry_activate(GtkEntry* search_entry, GtkGrid* search_grid){
     clean_grid(search_grid);
 
     // do search request to api
-    RESULT_SEARCH result = search(strdup(text)); // duplicate because i'm changing the string
+    RESULT_SEARCH result = search(strdup(text), apikey_global); // duplicate because i'm changing the string
 
     // if null then error or not found, check STDOUT for the error msg
     if (result.titles == NULL){

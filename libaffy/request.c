@@ -5,41 +5,9 @@
 #include "parse_json.h"
 
 char result[4096] = "";
-//char* result;
-
-// return user input title, only for cli version
-char* read_input(){
-    int counter = 0;
-    char *input = malloc(sizeof(char) * 1024);
-    int c;
-
-    if (!input) {
-        fprintf(stderr, "\nCould not allocate more memory");
-        exit(EXIT_FAILURE);
-    }
-
-    // loop until user input enter
-    while (1) {
-        c = getchar();
-
-        if (c == '\n') {
-            input[counter] = '\0';
-            return input;
-        } else {
-            input[counter] = c;
-        }
-        counter++;
-
-        // if input is larger than 1024 bytes than stop and return nothing
-        if (counter >= 1024) {
-            fprintf(stderr, "\nExceed maximum input capacity");
-            return "";
-        }
-    }
-}
 
 // takes request's argument to return usable url
-char* get_url(char* apikey, char* title, unsigned int page){
+char* get_url(const char* apikey, char* title, unsigned int page){
     char* url = malloc(sizeof(char) * 1024);
 
     sprintf(url, "http://www.omdbapi.com/?s=%s&apikey=%s&page=%u&type=movie", title, apikey, page);
@@ -55,9 +23,7 @@ static size_t write_result(void *ptr, size_t size, size_t nmemb, void *stream){
     return size*nmemb;
 }
 
-
-
-RESULT_SEARCH search(char* title) {
+RESULT_SEARCH search(char* title, const char* apikey) {
     char* url;
     char* temp;
 
@@ -65,7 +31,7 @@ RESULT_SEARCH search(char* title) {
         *temp = '+';
     }
 
-    url = get_url("cab5fef3", title, 1); // free title here
+    url = get_url(apikey, title, 1); // free title here
 
     strcpy(result, "");
 
