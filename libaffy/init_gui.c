@@ -8,6 +8,7 @@
 #include "config_file.h"
 
 void on_main_window_destroy(){
+    save_watchlist();
     free_dataset(dataset);
     if (watchlist_array != NULL) {free(watchlist_array);}
     gtk_main_quit();
