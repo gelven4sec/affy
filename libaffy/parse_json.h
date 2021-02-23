@@ -21,4 +21,6 @@ struct ResultTitle{
 
 RESULT_SEARCH get_title_list(char* result);
 
+const char* get_apikey(char* buffer);
+
 #endif //AFFY_PARSE_JSON_H
