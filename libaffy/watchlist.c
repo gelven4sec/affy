@@ -124,3 +124,13 @@ void remove_watchlist(GtkButton* btn, GtkLabel* lbl){
 
 }
 
+void save_watchlist(){
+    FILE* f = fopen("../dataset/watchlist.txt", "w");
+
+    for (int i = 0; i < watchlist_size; ++i) {
+        fprintf(f, "%s\n", dataset[watchlist_array[i]].tconst);
+    }
+
+    fclose(f);
+
+}
