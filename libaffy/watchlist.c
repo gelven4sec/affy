@@ -79,6 +79,50 @@ void clean_watchlist_grid(GtkGrid* grid){
     }
 }
 
+
+void remove_watchlist(GtkButton* btn, GtkLabel* lbl){
+    char* movie_id;
+    int* tmp_ptr;
+    int index;
+    int row;
+    int tmp = 0;
+
+    g_print("\nDEBUG1");
+
+    gtk_widget_hide(GTK_WIDGET(btn));
+    movie_id = gtk_label_get_text(lbl);
+
+    index = get_index(movie_id, dataset);
+
+    tmp_ptr = malloc(sizeof(int) * watchlist_size-1);
+
+    g_print("\nDEBUG2");
+
+    for (int i = 0; i < watchlist_size; ++i) {
+        //g_print("\nDEBUG-%d", i);
+        if (index == watchlist_array[i]) {
+            row = i;
+            tmp++;
+            continue;
+        }
+        tmp_ptr[i-tmp] = watchlist_array[i];
+    }
+
+    g_print("\nDEBUG3");
+
+    free(watchlist_array);
+    watchlist_array = tmp_ptr;
+
+    watchlist_size--;
+
+    g_print("\nDEBUG4");
+
+    GtkWidget* grid = (GtkWidget*) gtk_builder_get_object(builder_global,"watchlist_grid");
+    gtk_grid_remove_row(GTK_GRID(grid), row);
+
+    g_print("\nDEBUG5");
+}
+
 void fill_watchlist_grid(){
     GtkWidget* watchlist_grid = (GtkWidget*) gtk_builder_get_object (builder_global,"watchlist_grid");
 
@@ -86,7 +130,7 @@ void fill_watchlist_grid(){
     clean_watchlist_grid(GTK_GRID(watchlist_grid));
 
     // if no file or corrupt
-    if (watchlist_array == NULL){
+    if (watchlist_size == 0){
         GtkWidget* not_found = gtk_label_new("List empty... (You've never seen a movie ?)"); // In case it's not found
 
         gtk_grid_insert_row(GTK_GRID(watchlist_grid), 0);
@@ -109,7 +153,7 @@ void fill_watchlist_grid(){
         GtkWidget* id = gtk_label_new(dataset[watchlist_array[i]].tconst);
 
         GtkWidget* btn_add = gtk_button_new_from_icon_name("gtk-delete", GTK_ICON_SIZE_BUTTON);
-        //g_signal_connect (btn_add, "clicked", G_CALLBACK (remove_watchlist), id);
+        g_signal_connect (btn_add, "clicked", G_CALLBACK (remove_watchlist), id);
 
         // insert widget
         gtk_grid_attach(GTK_GRID(watchlist_grid), title, 0, i, 2, 1);
@@ -118,10 +162,6 @@ void fill_watchlist_grid(){
     }
 
     gtk_widget_show_all((GtkWidget *) watchlist_grid);
-}
-
-void remove_watchlist(GtkButton* btn, GtkLabel* lbl){
-
 }
 
 void save_watchlist(){

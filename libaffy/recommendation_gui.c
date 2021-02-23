@@ -15,6 +15,19 @@ void on_recommendation_btn_clicked(GtkButton* btn, GtkGrid* grid){
     // empty the grid
     clean_grid(grid);
 
+    // if no file or corrupt
+    if (watchlist_size == 0){
+        GtkWidget* not_found = gtk_label_new("No watchlist, no recommendation.");
+
+        gtk_grid_insert_row(GTK_GRID(grid), 0);
+        gtk_grid_attach(GTK_GRID(grid), not_found, 0, 0, 1, 1);
+
+        // show result
+        gtk_widget_show_all((GtkWidget *) grid);
+
+        return;
+    }
+
     user_profile = create_user_profile(watchlist_array, watchlist_size, dataset);
 
     result_list = get_top_10_user(&user_profile, dataset, watchlist_array, watchlist_size);
