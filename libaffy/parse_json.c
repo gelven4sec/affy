@@ -1,6 +1,13 @@
-//
-// Created by user0 on 2/14/21.
-//
+/*
+ * Filename : parse_json.c
+ *
+ * Made by : Léa LAROZE and Joakim PETTERSEN
+ *
+ * Created : 02/24/2021
+ *
+ * Description : Parse json content and return usable data.
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <json-c/json.h>
@@ -29,6 +36,7 @@ void free_search_result(RESULT_SEARCH result){
     }
 }
 
+// OMDb provide a Response field to prevent failed query
 int check_response(const struct json_object* parsed_result){
     struct json_object* response;
     struct json_object* error;
@@ -44,6 +52,7 @@ int check_response(const struct json_object* parsed_result){
     return 0;
 }
 
+// Parse every structure of result
 RESULT_SEARCH get_title_list(char* result){
     struct json_object* parsed_result;
     struct json_object* search;
@@ -93,16 +102,20 @@ RESULT_SEARCH get_title_list(char* result){
     return output;
 }
 
+// parsed json string from buffer and return apikey
 const char* get_apikey(char* buffer){
     struct json_object* parsed_result;
     struct json_object* apikey_obj;
     const char* apikey;
 
     parsed_result = json_tokener_parse(buffer);
+
+    // stop if no valid json file
     if (parsed_result == NULL){
         return NULL;
     }
 
+    // get apikey object from json structure
     json_object_object_get_ex(parsed_result, "apikey", &apikey_obj);
     apikey = json_object_get_string(apikey_obj);
 

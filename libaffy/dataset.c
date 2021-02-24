@@ -1,23 +1,30 @@
-//
-// Created by sven-eliasen on 1/1/2021.
-//
-// This function is about returning a list of
-// struct Movie to store the data from the dataset
-// file in argument.
-//
+/*
+ * Filename : dataset.c
+ *
+ * Made by : Léa LAROZE and Joakim PETTERSEN
+ *
+ * Created : 20/12/2020
+ *
+ * Description : Load dataset and return list of movies.
+*/
+
 #include "dataset.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+// read dataset file and return pointer to list
 MOVIE* get_dataset(){
     MOVIE* dataset;
 
-    FILE* dataset_file = fopen("../dataset/data.tsv", "r"); // dataset local .tsv file
+    // dataset local .tsv file
+    FILE* dataset_file = fopen("../dataset/data.tsv", "r");
+
     if (dataset_file == NULL){
         printf("\nCould not read dataset file.\nExit...");
         exit(EXIT_FAILURE);
     }
+
     dataset = init_dataset(dataset_file);
     fclose(dataset_file);
 
@@ -27,9 +34,12 @@ MOVIE* get_dataset(){
 // return the fields per lines
 char** get_fields(char* line){
     char* tok;
+
+    // 5 because we know there are 5 fields
     char** list = malloc(sizeof(char *) * 5);
     int counter = 0;
 
+    // split string with much pain and over-head
     for (tok = strtok(line, "\t"); tok && *tok; tok = strtok(NULL, "\t\n")){
         char* token = strdup(tok);
         list[counter] = token;
@@ -38,6 +48,7 @@ char** get_fields(char* line){
             break;
         }
     }
+
     return list;
 }
 
@@ -53,11 +64,12 @@ double rating_float(char* rating_s){
 int nb_nconsts(const char* line){
     int count = 0;
 
+    // get number of separator
     for (int i = 0; line[i] != '\0'; ++i) {
         if (',' == line[i])
             ++count;
     }
-
+    // nb separator+1 = number of fields
     return count+1;
 }
 
@@ -68,6 +80,7 @@ char** get_words(char* line, int* counter){
     char** list = malloc(sizeof(char *) * words);
     *counter = 0;
 
+    // split string with much pain and over-head
     for (tok = strtok(line, ","); tok && *tok; tok = strtok(NULL, ",\n")){
         char* token = strdup(tok);
         list[*counter] = token;
@@ -76,7 +89,6 @@ char** get_words(char* line, int* counter){
             break;
         }
     }
-    //printf("\nCounter: %d", *counter); DEBUG
 
     free(line);
     return list;
@@ -97,6 +109,7 @@ MOVIE get_movie(char* line){
             nb_nconsts,
             nb_genres
     };
+
     free(list);
     return movie;
 }
@@ -109,18 +122,16 @@ MOVIE* init_dataset(FILE* stream){
 
     dataset = malloc(sizeof(MOVIE)*SIZE);
     if (dataset == NULL) {
-        printf("Failed to allocate memory to dataset.");
+        printf("\nFailed to allocate memory to dataset.");
         exit(EXIT_FAILURE);
     }
 
+    // iterate though file lines
     while (fgets(line, 1024, stream)){
-        char* tmp = strdup(line);
-
-        dataset[counter] = get_movie(tmp);
+        dataset[counter] = get_movie(line);
         counter++;
-
-        free(tmp);
     }
+
     return dataset;
 }
 
@@ -128,12 +139,14 @@ void free_nconsts(const MOVIE* movie){
     for (int i = 0; i < movie->nb_nconst; i++){
         free(movie->nconsts[i]);
     }
+    free(movie->nconsts);
 }
 
 void free_genres(const MOVIE* movie){
     for (int i = 0; i < movie->nb_genres; i++){
         free(movie->genres[i]);
     }
+    free(movie->genres);
 }
 
 // free dataset
@@ -143,8 +156,6 @@ void free_dataset(MOVIE* dataset){
         free(dataset[i].primaryTitle);
         free_genres(&dataset[i]);
         free_nconsts(&dataset[i]);
-        free(dataset[i].genres);
-        free(dataset[i].nconsts);
     }
     free(dataset);
 }

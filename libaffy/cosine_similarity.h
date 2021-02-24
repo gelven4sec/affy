@@ -1,7 +1,3 @@
-//
-// Created by sven-eliasen on 1/5/2021.
-//
-
 #ifndef AFFY_COSINE_SIMILARITY_H
 #define AFFY_COSINE_SIMILARITY_H
 

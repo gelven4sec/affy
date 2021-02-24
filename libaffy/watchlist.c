@@ -1,6 +1,13 @@
-//
-// Created by user0 on 2/21/21.
-//
+/*
+ * Filename : watchlist.c
+ *
+ * Made by : Léa LAROZE and Joakim PETTERSEN
+ *
+ * Created : 78/34/2252
+ *
+ * Description : Load watchlist and it deals with it.
+*/
+
 #include "watchlist.h"
 #include "init_gui.h"
 #include "get_top_10.h"
@@ -8,6 +15,7 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 
+// free string structure of watchlist
 void free_watchlist_char(char** list){
     for (int i = 0; i < watchlist_size; ++i) {
         free(list[i]);
@@ -15,6 +23,7 @@ void free_watchlist_char(char** list){
     free(list);
 }
 
+// return list of watchlist indexes
 int* get_watchlist_indexes(char** list){
     int* list_index = malloc(sizeof(int) * watchlist_size);
 
@@ -28,6 +37,7 @@ int* get_watchlist_indexes(char** list){
     return list_index;
 }
 
+// return list of watchlist indexes
 int* watchlist(size_t* counter) {
     FILE *file;
     unsigned long n;
@@ -49,7 +59,6 @@ int* watchlist(size_t* counter) {
     if (n == 0 || n%10 != 0) {
         fclose(file);
         return NULL;
-
     } else {
         list = malloc(sizeof(char*) * (n/10));
 
@@ -70,16 +79,18 @@ int* watchlist(size_t* counter) {
 
     fclose(file);
 
-    return get_watchlist_indexes(list); // list free here
+    // list free here
+    return get_watchlist_indexes(list);
 }
 
+// reset grid
 void clean_watchlist_grid(GtkGrid* grid){
     for (int i = watchlist_size; i > -1; --i) {
         gtk_grid_remove_row(GTK_GRID(grid), i);
     }
 }
 
-
+// remove an element from watchlist
 void remove_watchlist(GtkButton* btn, GtkLabel* lbl){
     char* movie_id;
     int* tmp_ptr;
@@ -87,42 +98,47 @@ void remove_watchlist(GtkButton* btn, GtkLabel* lbl){
     int row;
     int tmp = 0;
 
-    g_print("\nDEBUG1");
-
-    gtk_widget_hide(GTK_WIDGET(btn));
     movie_id = gtk_label_get_text(lbl);
 
     index = get_index(movie_id, dataset);
 
+    // create new watchlist
     tmp_ptr = malloc(sizeof(int) * watchlist_size-1);
 
-    g_print("\nDEBUG2");
-
+    // iterate through watchlist
     for (int i = 0; i < watchlist_size; ++i) {
-        //g_print("\nDEBUG-%d", i);
+        // if watchlist element == index to remove
         if (index == watchlist_array[i]) {
             row = i;
             tmp++;
             continue;
         }
+        // tmp never > than 1
         tmp_ptr[i-tmp] = watchlist_array[i];
     }
 
-    g_print("\nDEBUG3");
-
+    // replace old watchlist with the new one
     free(watchlist_array);
     watchlist_array = tmp_ptr;
 
     watchlist_size--;
 
-    g_print("\nDEBUG4");
-
     GtkWidget* grid = (GtkWidget*) gtk_builder_get_object(builder_global,"watchlist_grid");
     gtk_grid_remove_row(GTK_GRID(grid), row);
 
-    g_print("\nDEBUG5");
+    // if no film in watchlist anymore
+    if (watchlist_size == 0){
+        GtkWidget* not_found = gtk_label_new("List empty... (You've never seen a movie ?)"); // In case it's not found
+
+        gtk_grid_insert_row(GTK_GRID(grid), 0);
+        gtk_grid_attach(GTK_GRID(grid), not_found, 0, 0, 1, 1);
+
+        gtk_widget_show_all(grid);
+    }
+
 }
 
+// signal handler to print watchlist
 void fill_watchlist_grid(){
     GtkWidget* watchlist_grid = (GtkWidget*) gtk_builder_get_object (builder_global,"watchlist_grid");
 
@@ -131,12 +147,13 @@ void fill_watchlist_grid(){
 
     // if no file or corrupt
     if (watchlist_size == 0){
-        GtkWidget* not_found = gtk_label_new("List empty... (You've never seen a movie ?)"); // In case it's not found
+        GtkWidget* not_found = gtk_label_new("List empty... (You've never seen a movie ?)");
 
         gtk_grid_insert_row(GTK_GRID(watchlist_grid), 0);
         gtk_grid_attach(GTK_GRID(watchlist_grid), not_found, 0, 0, 1, 1);
     }
 
+    // iterate through watchlist
     for (int i = 0; i < watchlist_size; ++i) {
         char title_bold[255];
 

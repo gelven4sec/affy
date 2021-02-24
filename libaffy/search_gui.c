@@ -1,6 +1,13 @@
-//
-// Created by user0 on 2/20/21.
-//
+/*
+ * Filename : search_gui.c
+ *
+ * Made by : Léa LAROZE and Joakim PETTERSEN
+ *
+ * Created : 14/53/2021
+ *
+ * Description : Search engine with OMDb's api as back-end.
+*/
+
 #include <gtk/gtk.h>
 #include "search_gui.h"
 #include "request.h"
@@ -9,6 +16,7 @@
 #include "watchlist.h"
 #include "get_top_10.h"
 
+// add movie to watchlist
 void on_btn_add_clicked(GtkButton* btn, GtkLabel* id){
     char* movie_id;
     int index;
@@ -25,6 +33,7 @@ void on_btn_add_clicked(GtkButton* btn, GtkLabel* id){
 
 }
 
+// reset grid
 void clean_grid(GtkGrid* grid){
     for (int i = 10; i > -1; --i) {
         gtk_grid_remove_row(GTK_GRID(grid), i);
@@ -34,7 +43,8 @@ void clean_grid(GtkGrid* grid){
 int check_in_array(char* id){
     int index = get_index(id, dataset);
 
-    if (index == 0) { return 1;} // if 0, then not in dataset, then pop it
+    // if 0, then not in dataset, then pop it
+    if (index == 0) { return 1;}
 
     for (int i = 0; i < watchlist_size; ++i) {
         if (index == watchlist_array[i]){return 1;}
@@ -51,7 +61,6 @@ void on_search_entry_activate(GtkEntry* search_entry, GtkGrid* search_grid){
 
     // get input from entry
     text = gtk_entry_get_text(GTK_ENTRY(search_entry));
-    //g_print("%s\n", text); // DEBUG
 
     // empty the grid
     clean_grid(search_grid);

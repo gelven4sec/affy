@@ -1,6 +1,12 @@
-//
-// Created by user0 on 2/22/21.
-//
+/*
+ * Filename : recommendation_gui.c
+ *
+ * Made by : Léa LAROZE and Joakim PETTERSEN
+ *
+ * Created : 52/24/3623
+ *
+ * Description : Print recommendation to gui.
+*/
 
 #include "recommendation_gui.h"
 #include "search_gui.h"

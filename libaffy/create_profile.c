@@ -1,14 +1,19 @@
-//
-// Created by user0 on 1/16/2021.
-//
+/*
+ * Filename : create_profile.c
+ *
+ * Made by : Léa LAROZE and Joakim PETTERSEN
+ *
+ * Created : 24/13/5252
+ *
+ * Description : Create user profile structure.
+*/
 
 #include "create_profile.h"
 #include <stdlib.h>
 #include "dataset.h"
-#include "get_top_10.h"
 #include "cosine_similarity.h"
 
-void init_genres(struct Movie movie, char** list, int* counter){
+void init_genres(MOVIE movie, char** list, int* counter){
     for (int i = 0; i < movie.nb_genres; ++i) {
         if (check_duplicate(list, *counter, movie.genres[i]) == 1){
             list[(*counter)] = movie.genres[i];
@@ -17,7 +22,7 @@ void init_genres(struct Movie movie, char** list, int* counter){
     }
 }
 
-void init_nconsts(struct Movie movie, char** list, int* counter){
+void init_nconsts(MOVIE movie, char** list, int* counter){
     for (int i = 0; i < movie.nb_nconst; ++i) {
         if (check_duplicate(list, *counter, movie.nconsts[i]) == 1){
             list[(*counter)] = movie.nconsts[i];
@@ -27,7 +32,6 @@ void init_nconsts(struct Movie movie, char** list, int* counter){
 }
 
 MOVIE create_user_profile(const int* list_index, int nb, MOVIE* dataset){
-    //int list_index[nb];
     int counter_nconst = 0;
     int counter_genres = 0;
     int size_nconst = 0;

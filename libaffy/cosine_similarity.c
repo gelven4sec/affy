@@ -1,9 +1,13 @@
-//
-// Created by sven-eliasen on 1/5/2021.
-//
-// This function process the calculation of the
-// cosine similarity of two films as arguments.
-//
+/*
+ * Filename : cosine_similarity.c
+ *
+ * Made by : Léa LAROZE and Joakim PETTERSEN
+ *
+ * Created : 2452/222/42424
+ *
+ * Description : Calculate cosine similarity between two films.
+*/
+
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
@@ -23,6 +27,7 @@ int check_duplicate(char** list, int nb, char* str){
     return 1;
 }
 
+// take films in arguments and return list with all fields without duplicate
 char** init_bag_words(const MOVIE* movie1, const MOVIE* movie2, int* counter, int* counter_genres){
     int size = movie1->nb_genres + movie1->nb_nconst + movie2->nb_genres + movie2->nb_nconst;
     char** list = malloc(sizeof(char *) * size);
@@ -93,7 +98,7 @@ char** init_bag_words(const MOVIE* movie1, const MOVIE* movie2, int* counter, in
     return result;
 }*/
 
-
+// define words weight
 double* init_list_idf(char** list, int counter, int counter_genres){
     double* list_idf = malloc(sizeof(double) * (counter));
     for (int i = 0; i < counter; ++i) {
@@ -107,6 +112,7 @@ double* init_list_idf(char** list, int counter, int counter_genres){
     return list_idf;
 }
 
+// convert films into vector
 void init_vector(double* vector, const MOVIE* movie, int counter, int counter_genres, char** list, const double* list_idf){
     for (int i = 0; i < counter; ++i) {
         char* str1 = list[i];
@@ -178,7 +184,7 @@ double cosine_similarity(const double* x, const double* y, int counter){
     return result;
 }
 
-
+// return final cosine similarity
 double get_cosine_similarity(const MOVIE* movie1, const MOVIE* movie2){
     int counter = 0;
     int counter_genres = 0;
@@ -197,5 +203,6 @@ double get_cosine_similarity(const MOVIE* movie1, const MOVIE* movie2){
     free(vector2);
     free(list);
     free(list_idf);
+
     return result;
 }

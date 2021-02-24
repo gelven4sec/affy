@@ -1,11 +1,13 @@
-//
-// Created by sven-eliasen on 1/8/2021.
-//
-// This function is about return the top ten
-// indexes of the films with the more similar
-// cosine, from a film ID.
-//
-#include <stdio.h>
+/*
+ * Filename : get_top_10.c
+ *
+ * Made by : Léa LAROZE and Joakim PETTERSEN
+ *
+ * Created : 52/24/3623
+ *
+ * Description : Get top 10 recommendation.
+*/
+
 #include <stdlib.h>
 #include <string.h>
 #include "dataset.h"
@@ -64,26 +66,6 @@ int* bubble_sort(double* list_cosine){
 
     free(list_index);
     return list;
-}
-
-int* get_top_10(char* tconst, MOVIE* dataset){
-    int index = get_index(tconst, dataset);
-    double* list = malloc(sizeof(double) * SIZE);
-    int* result_list;
-
-    if (index == 0){
-        printf("\nInput movie id not in dataset.\nExit...");
-        exit(EXIT_FAILURE);
-    }
-
-    for (int i = 0; i < SIZE; ++i) {
-        list[i] = get_cosine_similarity(&dataset[index], &dataset[i]);
-    }
-
-    result_list = bubble_sort(list);
-
-    free(list);
-    return result_list;
 }
 
 int* get_top_10_user(const MOVIE* user_profile, const MOVIE* dataset, const int* list_index, int nb){

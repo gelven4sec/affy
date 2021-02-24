@@ -1,7 +1,3 @@
-//
-// Created by user0 on 2/20/21.
-//
-
 #ifndef AFFY_SEARCH_GUI_H
 #define AFFY_SEARCH_GUI_H
 

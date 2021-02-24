@@ -11,6 +11,8 @@
 GtkBuilder *builder_global;
 MOVIE* dataset;
 const char* apikey_global;
+size_t watchlist_size;
+int* watchlist_array;
 
 void init_gui(int argc, char **argv);
 

@@ -1,3 +1,13 @@
+/*
+ * Filename : request.c
+ *
+ * Made by : Léa LAROZE and Joakim PETTERSEN
+ *
+ * Created : 242/24/2021
+ *
+ * Description : do search request by doing HTTP GET query to OMDb.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,22 +27,27 @@ char* get_url(const char* apikey, char* title, unsigned int page){
 
 }
 
+// function called by curl to write into result string
 static size_t write_result(void *ptr, size_t size, size_t nmemb, void *stream){
     strcat(result, ptr);
 
     return size*nmemb;
 }
 
+// dealing with curl to do http request
 RESULT_SEARCH search(char* title, const char* apikey) {
     char* url;
     char* temp;
 
+    // you can't put a space in a http request, have to replace it with '+'
     while ((temp = strchr(title, ' ')) != NULL){
         *temp = '+';
     }
 
-    url = get_url(apikey, title, 1); // free title here
+    // free title here
+    url = get_url(apikey, title, 1);
 
+    // reset result string
     strcpy(result, "");
 
     CURL *curl;
@@ -60,7 +75,7 @@ RESULT_SEARCH search(char* title, const char* apikey) {
     }
     free(url);
 
-    //printf("\n%s", result);
+    // parse json result
     RESULT_SEARCH output = get_title_list(result);
 
     return output;

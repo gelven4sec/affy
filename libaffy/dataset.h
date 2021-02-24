@@ -1,8 +1,3 @@
-//
-// Created by sven-eliasen on 1/1/2021.
-//
-
-
 #ifndef AFFY_DATASET_H
 #define AFFY_DATASET_H
 

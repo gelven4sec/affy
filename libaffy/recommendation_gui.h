@@ -1,7 +1,3 @@
-//
-// Created by user0 on 2/22/21.
-//
-
 #ifndef AFFY_RECOMMENDATION_GUI_H
 #define AFFY_RECOMMENDATION_GUI_H
 

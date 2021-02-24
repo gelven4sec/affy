@@ -1,7 +1,3 @@
-//
-// Created by sven-eliasen on 1/8/2021.
-//
-
 #ifndef AFFY_GET_TOP_10_H
 #define AFFY_GET_TOP_10_H
 
